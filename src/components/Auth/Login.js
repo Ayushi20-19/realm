@@ -21,7 +21,7 @@ const Login = () => {
               class='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
               placeholder='name@company.com'
               required=''
-            />{" "}
+            />
           </div>
           <div>
             <label
@@ -69,7 +69,7 @@ const Login = () => {
             Login to your account
           </button>
           <div class='text-sm font-medium text-gray-500 dark:text-gray-300'>
-            Not registered?{" "}
+            Not registered?
             <a
               href='#'
               class='text-teal-700 hover:underline dark:text-blue-500'>

@@ -3,7 +3,6 @@ import React from "react";
 const Signup = () => {
   return (
     <div>
-      {" "}
       <div class=' mx-auto max-w-4xl'>
         <div class='bg-white shadow-md border border-gray-200 rounded-lg max-w-sm p-4 sm:p-6 lg:p-8 dark:bg-gray-800 dark:border-gray-700'>
           <form class='space-y-6' action='#'>
@@ -23,7 +22,7 @@ const Signup = () => {
                 class='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 placeholder='name@company.com'
                 required=''
-              />{" "}
+              />
             </div>
             <div>
               <label
@@ -38,7 +37,7 @@ const Signup = () => {
                 class='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
                 placeholder='name@company.com'
                 required=''
-              />{" "}
+              />
             </div>
             <div>
               <label
@@ -101,7 +100,7 @@ const Signup = () => {
               Create New Account
             </button>
             <div class='text-sm font-medium text-gray-500 dark:text-gray-300'>
-              Already Have Account?{" "}
+              Already Have Account?
               <a
                 href='#'
                 class='text-teal-700 hover:underline dark:text-blue-500'>

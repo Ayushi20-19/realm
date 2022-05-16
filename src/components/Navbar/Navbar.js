@@ -106,18 +106,6 @@ export default function Navbar() {
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}>
-                            Settings
-                          </NavLink>
-                        )}
-                      </Menu.Item>
-                      <Menu.Item>
-                        {({ active }) => (
-                          <NavLink
-                            to='/profile'
-                            className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
-                            )}>
                             Sign out
                           </NavLink>
                         )}
@@ -136,7 +124,6 @@ export default function Navbar() {
                   key={item.name}
                   as='a'
                   to={item.to}
-                  // href={item.href}
                   className={classNames(
                     item.current
                       ? "bg-gray-900 text-white"

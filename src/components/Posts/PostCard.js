@@ -104,7 +104,7 @@ const PostCard = () => {
                 </div>
                 <div className='space-y-3'>
                   <p className='text-sm'>
-                    <span className='text-base font-semibold'>External_</span>{" "}
+                    <span className='text-base font-semibold'>External_</span>
                     It's getting cold out there!
                   </p>
                   <input
