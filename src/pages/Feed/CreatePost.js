@@ -14,9 +14,7 @@ const CreatePost = () => {
                   className='object-cover object-center w-8 h-8 rounded-full shadow-sm bg-coolGray-500 border-coolGray-700'
                 />
                 <div className='-space-y-1'>
-                  <h2 className='text-sm font-semibold leading-none'>
-                    External_
-                  </h2>
+                  <h2 className='text-sm font-semibold leading-none'>Adarsh</h2>
                 </div>
               </div>
             </div>

@@ -16,7 +16,7 @@ const PostCard = () => {
                   />
                   <div className='-space-y-1'>
                     <h2 className='text-sm font-semibold leading-none'>
-                      External_
+                      Adarsh
                     </h2>
                     <span className='inline-block text-xs leading-none text-coolGray-400'>
                       New York City
@@ -104,7 +104,7 @@ const PostCard = () => {
                 </div>
                 <div className='space-y-3'>
                   <p className='text-sm'>
-                    <span className='text-base font-semibold'>External_</span>
+                    <span className='text-base font-semibold'>Adarsh</span>
                     It's getting cold out there!
                   </p>
                   <input

@@ -13,7 +13,7 @@ const FollowCard = () => {
             />
             <div className='-space-y-1'>
               <h2 className=' font-semibold leading-none text-base mr-1'>
-                External_
+                Unknown_
               </h2>
             </div>
           </div>

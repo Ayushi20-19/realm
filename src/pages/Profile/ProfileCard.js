@@ -21,7 +21,7 @@ const ProfileCard = () => {
                 alt=''
               />
               <div class='py-2'>
-                <h3 class='font-bold text-2xl mb-1'>Cait Genevieve</h3>
+                <h3 class='font-bold text-2xl mb-1'>Adarsh Balika</h3>
                 <div class='inline-flex text-grey-dark sm:flex items-center'>
                   <svg
                     class='h-5 w-5 text-grey mr-1'
@@ -42,8 +42,7 @@ const ProfileCard = () => {
             <div class='flex w-full'>
               <div class='wp-60 flex items-center mr-1 '>
                 <a class='truncate overflow-hidden ... ' href='#'>
-                  Link nnnnnnnnnn jdfn fef jef feefn fndf mdfd fjdfnmd fjfn md
-                  jdfn dnfnn
+                  Link Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 </a>
               </div>
 
