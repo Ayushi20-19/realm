@@ -73,6 +73,7 @@ const postSlice = createSlice({
       state.posts = payload;
       state.status = "rejected";
     },
+
     //delete post
     [deletePost.pending]: (state) => {
       state.status = "pending";
