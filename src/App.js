@@ -18,13 +18,22 @@ function App() {
             <PrivateRoute>
               <Feed />
             </PrivateRoute>
-          }
-        />
-
-        {/* <Route path='/' element={<Feed />}></Route> */}
-        <Route path='/explore' element={<Explore />}></Route>
+          }></Route>
+        <Route
+          path='/explore'
+          element={
+            <PrivateRoute>
+              <Explore />
+            </PrivateRoute>
+          }></Route>
         <Route path='/auth' element={<Login />}></Route>
-        <Route path='/profile' element={<Profile />}></Route>
+        <Route
+          path='/profile'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }></Route>
       </Routes>
     </div>
   );

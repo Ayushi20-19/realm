@@ -4,7 +4,7 @@ import CreatePost from "./CreatePost";
 import FollowCard from "./FollowCard";
 import Tab from "./Tab";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllPosts } from "./postSlice";
+import { getAllPosts } from "../../reducers/postSlice";
 import { getAllPostService } from "../../services/posts.service";
 
 const Feed = () => {
@@ -14,9 +14,8 @@ const Feed = () => {
 
   useEffect(() => {
     dispatch(getAllPosts());
-    getAllPostService();
   }, [dispatch]);
-
+  console.log(posts);
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>
@@ -24,7 +23,7 @@ const Feed = () => {
         <CreatePost />
         <Tab />
         {status !== "idle" || error ? (
-          posts.map((post) => <PostCard {...post} />)
+          posts?.map((post) => <PostCard {...post} />)
         ) : (
           <p>{status}</p>
         )}

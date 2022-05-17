@@ -62,7 +62,6 @@ export const getAllUserPostsHandler = function (schema, request) {
  * send POST Request at /api/user/posts/
  * body contains {content}
  * */
-
 export const createPostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
   try {
@@ -80,12 +79,14 @@ export const createPostHandler = function (schema, request) {
     const { postData } = JSON.parse(request.requestBody);
     const post = {
       _id: uuid(),
-      ...postData,
+      content: postData,
       likes: {
         likeCount: 0,
         likedBy: [],
         dislikedBy: [],
       },
+      comments: [],
+      bookmark: [],
       username: user.username,
       createdAt: formatDate(),
       updatedAt: formatDate(),
