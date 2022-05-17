@@ -1,17 +1,27 @@
 import { current } from "@reduxjs/toolkit";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deletePost, likeDislikePost } from "../../reducers/postSlice";
+import {
+  deletePost,
+  likeDislikePost,
+  addRemoveBookmark,
+} from "../../reducers/postSlice";
 const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
+  const { bookmarks } = useSelector((store) => store.posts);
+
   const isLiked = posts.likes.likedBy?.some(
     (like) => like.username === user.username
   );
-  console.log("🚀 ~ file: PostCard.js ~ line 12 ~ PostCard ~ isLiked", isLiked);
 
+  const isBookmarkedd = () => {
+    return bookmarks.bookmarks?.find((id) => id === postId) ? true : false;
+  };
+
+  const isBookmarked = isBookmarkedd() ? true : false;
   return (
     <div>
       <div className='container main-post-container  mx-auto w-full'>
@@ -109,11 +119,19 @@ const PostCard = ({ ...posts }) => {
                     </button>
                   </div>
                   <button
+                    onClick={() =>
+                      dispatch(
+                        addRemoveBookmark({ postId, isBookmarked, token })
+                      )
+                    }
                     type='button'
                     title='Bookmark post'
                     className='flex items-center justify-center'>
-                    <i className='fas fa-bookmark mr-1 hover:text-teal-400 text-xl'></i>
-                    <i className='fal fa-bookmark mr-1 hover:text-teal-400 text-xl'></i>
+                    {isBookmarked ? (
+                      <i className='fas fa-bookmark mr-1 text-teal-500 hover:text-teal-400 text-xl'></i>
+                    ) : (
+                      <i className='fal fa-bookmark mr-1 hover:text-teal-400 text-xl'></i>
+                    )}
                   </button>
                 </div>
                 <div className='flex flex-wrap items-center pt-3 pb-1'>

@@ -42,3 +42,25 @@ export const dislikePostService = (postId, token) =>
       },
     }
   );
+
+export const addToBookmarkService = (postId, token) =>
+  axios.post(
+    `/api/users/bookmark/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const removeFromBookmarkService = (postId, token) =>
+  axios.post(
+    `/api/users/remove-bookmark/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );

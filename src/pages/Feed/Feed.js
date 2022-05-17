@@ -5,17 +5,18 @@ import FollowCard from "./FollowCard";
 import Tab from "./Tab";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../../reducers/postSlice";
-import { getAllPostService } from "../../services/posts.service";
 
 const Feed = () => {
-  const { posts, status, error } = useSelector((store) => store.posts);
+  const { posts, status, error, bookmarks } = useSelector(
+    (store) => store.posts
+  );
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch]);
-  console.log(posts);
+  }, [dispatch, bookmarks]);
+
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>
