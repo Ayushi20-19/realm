@@ -16,6 +16,12 @@
 .wp-60 {
   width: 60%;
 }
+.wp-70 {
+  width: 70%;
+}
+.wp-80 {
+  width: 80%;
+}
 .bg-lg {
   background-image: linear-gradient(to right, #2dd4bf, #14b8a6, #0d9488);
 }
