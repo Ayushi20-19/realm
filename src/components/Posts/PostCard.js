@@ -1,9 +1,15 @@
-import React from "react";
-
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deletePost } from "../../reducers/postSlice";
 const PostCard = ({ ...posts }) => {
+  const postId = posts._id;
+  console.log("🚀 ~ file: PostCard.js ~ line 6 ~ PostCard ~ id", postId);
+  const [isOpenDropdown, setOpenDropdown] = useState(false);
+  const dispatch = useDispatch();
+  const { token, user } = useSelector((store) => store.auth);
   return (
     <div>
-      <div className='container main-post-container mx-auto w-full'>
+      <div className='container main-post-container  mx-auto w-full'>
         <div>
           <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
             <div className='rounded-md shadow-md sm:w-96 bg-coolGray-900 text-coolGray-100'>
@@ -23,24 +29,46 @@ const PostCard = ({ ...posts }) => {
                     </span>
                   </div>
                 </div>
-                <button title='Open options' type='button'>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 512 512'
-                    className='w-5 h-5 fill-current'>
-                    <path d='M256,144a64,64,0,1,0-64-64A64.072,64.072,0,0,0,256,144Zm0-96a32,32,0,1,1-32,32A32.036,32.036,0,0,1,256,48Z'></path>
-                    <path d='M256,368a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,368Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,464Z'></path>
-                    <path d='M256,192a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,192Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,288Z'></path>
-                  </svg>
-                </button>
+                {user.username === posts.username && (
+                  <div
+                    className='rounded-full px-3 py-0.5 cursor-pointer relative duration-200'
+                    onClick={() => setOpenDropdown(!isOpenDropdown)}>
+                    <button title='Open options' type='button'>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 512 512'
+                        className='w-5 h-5 fill-current'>
+                        <path d='M256,144a64,64,0,1,0-64-64A64.072,64.072,0,0,0,256,144Zm0-96a32,32,0,1,1-32,32A32.036,32.036,0,0,1,256,48Z'></path>
+                        <path d='M256,368a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,368Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,464Z'></path>
+                        <path d='M256,192a64,64,0,1,0,64,64A64.072,64.072,0,0,0,256,192Zm0,96a32,32,0,1,1,32-32A32.036,32.036,0,0,1,256,288Z'></path>
+                      </svg>
+                    </button>
+
+                    {isOpenDropdown && (
+                      <ul className='dropdown absolute text-sm px-1 py-2 rounded-lg  m-0 bg-teal-100 top-8 right-4 w-36 gap-1'>
+                        <li className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
+                          Edit
+                        </li>
+                        <li
+                          className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
+                          onClick={() => (
+                            dispatch(deletePost({ postId, token })),
+                            console.log(postId)
+                          )}>
+                          Delete
+                        </li>
+                      </ul>
+                    )}
+                  </div>
+                )}
               </div>
               <div className='p-3  '>
                 <p className='text-sm mb-1'>{posts.content}</p>
-                <img
+                {/* <img
                   src='https://friendkit.cssninja.io/assets/img/demo/unsplash/2.jpg'
                   alt=''
                   className='object-cover object-center w-full h-72 bg-coolGray-500 my-1'
-                />
+                /> */}
               </div>
 
               <div className='p-3'>

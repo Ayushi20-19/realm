@@ -19,7 +19,7 @@ const Feed = () => {
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>
-      <div className=' wp-42'>
+      <div className='wp-90 sm:wp-42'>
         <CreatePost />
         <Tab />
         {status !== "idle" || error ? (
@@ -28,7 +28,7 @@ const Feed = () => {
           <p>{status}</p>
         )}
       </div>
-      <div className='hidden sm:block '>
+      <div className='hidden sm:block'>
         <FollowCard />
         <FollowCard />
         <FollowCard />
