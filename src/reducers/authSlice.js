@@ -15,7 +15,6 @@ export const userLogin = createAsyncThunk(
       const res = await userLoginService(email, password);
       return res.data;
     } catch (error) {
-      // console.log("object", error);
       return thunkAPI.rejectWithValue(error);
     }
   }
@@ -31,6 +30,16 @@ export const userSignup = createAsyncThunk("auth/userSignup", async () => {
 const authSlice = createSlice({
   name: "auth",
   initialState,
+  reducers: {
+    logout: () => {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      return {
+        user: null,
+        token: null,
+      };
+    },
+  },
   extraReducers: {
     [userLogin.pending]: (state) => {
       state.state = "loading";
@@ -62,5 +71,6 @@ const authSlice = createSlice({
     },
   },
 });
+export const { logout } = authSlice.actions;
 
 export default authSlice.reducer;

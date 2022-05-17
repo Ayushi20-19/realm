@@ -2,7 +2,8 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { NavLink } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
+import { logout } from "../../reducers/authSlice";
 const navigation = [
   { name: "NewsFeed", to: "/", current: true },
   { name: "Explore", to: "/explore", current: false },
@@ -14,6 +15,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const dispatch = useDispatch();
   return (
     <Disclosure
       as='nav'
@@ -101,12 +103,13 @@ export default function Navbar() {
                       <Menu.Item>
                         {({ active }) => (
                           <NavLink
-                            to='/profile'
+                            onClick={() => dispatch(logout())}
+                            to='/auth'
                             className={classNames(
                               active ? "bg-gray-100" : "",
                               "block px-4 py-2 text-sm text-gray-700"
                             )}>
-                            Sign out
+                            Log out
                           </NavLink>
                         )}
                       </Menu.Item>
