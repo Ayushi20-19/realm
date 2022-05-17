@@ -5,6 +5,8 @@
   "dependencies": {
     "@headlessui/react": "^1.6.1",
     "@heroicons/react": "^1.0.6",
+    "@reduxjs/toolkit": "^1.8.1",
+    "axios": "^0.27.2",
     "dayjs": "^1.11.2",
     "jwt-decode": "^3.1.2",
     "jwt-encode": "^1.0.1",
@@ -12,6 +14,7 @@
     "mockman-js": "^1.1.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
+    "react-redux": "^8.0.1",
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "uuid": "^8.3.2"
@@ -20,7 +23,8 @@
     "start": "react-scripts start",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build": "npx tailwindcss -i ./src/index.css -o ./dist/output.css ",
+    "build": "react-scripts build",
+    "cssbuild": "npx tailwindcss -i ./src/index.css -o ./dist/output.css ",
     "watch": "npx tailwindcss -i ./src/index.css -o ./dist/output.css --watch"
   },
   "eslintConfig": {
