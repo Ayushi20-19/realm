@@ -2,7 +2,6 @@ import "./util.css";
 import Navbar from "./components/Navbar/Navbar";
 import Feed from "./pages/Feed/Feed";
 import Login from "./components/Auth/Login";
-import Signup from "./components/Auth/Signup";
 import Profile from "./pages/Profile/Profile";
 import { Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore/Explore";
