@@ -7,7 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../../reducers/postSlice";
 
 const Feed = () => {
-  const { posts, status, error, bookmarks } = useSelector(
+  const { posts, status, error, bookmarks, comments } = useSelector(
     (store) => store.posts
   );
 
@@ -15,8 +15,8 @@ const Feed = () => {
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks]);
-
+  }, [dispatch, bookmarks, comments]);
+  console.log(posts);
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>

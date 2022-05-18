@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  addCommentService,
   addToBookmarkService,
   createPostService,
   deletePostService,
@@ -14,6 +15,7 @@ const initialState = {
   error: null,
   posts: [],
   bookmarks: [],
+  comments: [],
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
@@ -77,6 +79,20 @@ export const addRemoveBookmark = createAsyncThunk(
   }
 );
 
+export const addComment = createAsyncThunk(
+  "post/addComment",
+  async ({ postId, commentData, token }, thunkAPI) => {
+    console.log("🚀 ~ file: add comment", postId, commentData, token);
+
+    try {
+      const token = localStorage.getItem("token");
+      const response = await addCommentService(postId, commentData, token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 const postSlice = createSlice({
   name: "posts",
   initialState,
@@ -141,6 +157,18 @@ const postSlice = createSlice({
       state.bookmarks = payload;
     },
     [addRemoveBookmark.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
+    //add and remove from bookmark
+    [addComment.pending]: (state) => {
+      state.status = "pending";
+    },
+    [addComment.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.comments = payload;
+    },
+    [addComment.rejected]: (state, { payload }) => {
       state.status = "rejected";
       state.error = payload;
     },

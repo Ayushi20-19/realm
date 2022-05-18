@@ -5,10 +5,12 @@ import {
   deletePost,
   likeDislikePost,
   addRemoveBookmark,
+  addComment,
 } from "../../reducers/postSlice";
 const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
+  const [commentData, setCommentData] = useState("");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
   const { bookmarks } = useSelector((store) => store.posts);
@@ -22,6 +24,7 @@ const PostCard = ({ ...posts }) => {
   };
 
   const isBookmarked = isBookmarkedd() ? true : false;
+
   return (
     <div>
       <div className='container main-post-container  mx-auto w-full'>
@@ -140,11 +143,27 @@ const PostCard = ({ ...posts }) => {
                   </div>
                 </div>
                 <div className='space-y-3'>
-                  <p className='text-sm'>
-                    <span className='text-base font-semibold'>Adarsh</span>
-                    It's getting cold out there!
-                  </p>
+                  {posts.comments.slice(0, 4)?.map((val) => (
+                    <>
+                      <p className='text-sm'>
+                        <span className='text-base font-semibold'>
+                          {val.username}{" "}
+                        </span>
+                        {val.text}
+                      </p>
+                    </>
+                  ))}
+
                   <input
+                    onChange={(e) => setCommentData(e.target.value)}
+                    onKeyPress={(e) =>
+                      e.key === "Enter" &&
+                      dispatch(
+                        addComment({ postId, commentData, token }),
+                        setCommentData("")
+                      )
+                    }
+                    value={commentData}
                     type='text'
                     placeholder='Add a comment...'
                     className='w-full py-0.5 bg-transparent border-none rounded text-sm pl-0 text-coolGray-100'

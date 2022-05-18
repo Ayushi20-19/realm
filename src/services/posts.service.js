@@ -64,3 +64,33 @@ export const removeFromBookmarkService = (postId, token) =>
       },
     }
   );
+
+export const addCommentService = (postId, commentData, token) => {
+  const res = axios.post(
+    `/api/comments/add/${postId}`,
+    {
+      commentData,
+    },
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+  console.log(
+    "🚀 ~ file: posts.service.js ~ line 82 ~ addCommentService ~ res",
+    res
+  );
+  return res;
+};
+// axios.post(
+//   `/api/comments/add/${postId}`,
+//   {
+//     commentData,
+//   },
+//   {
+//     headers: {
+//       authorization: token,
+//     },
+//   }
+// );
