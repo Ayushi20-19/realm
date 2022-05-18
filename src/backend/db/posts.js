@@ -9,6 +9,8 @@ import { formatDate } from "../utils/authUtils";
 export const posts = [
   {
     _id: uuid(),
+
+    bookmarks: [],
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui nt, Nam libero tempore, cum soluta nobis estplaceat facere possimus, omnis voluptas assumenda est, omnis doibus aut a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
     likes: {
@@ -42,6 +44,7 @@ export const posts = [
   },
   {
     _id: uuid(),
+    bookmarks: [],
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos .",
     likes: {
@@ -50,7 +53,6 @@ export const posts = [
       dislikedBy: [],
     },
     username: "shubhamsoni",
-
     comments: [
       {
         _id: uuid(),
@@ -76,6 +78,7 @@ export const posts = [
   },
   {
     _id: uuid(),
+    bookmarks: [],
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos .",
     likes: {
@@ -109,6 +112,7 @@ export const posts = [
   },
   {
     _id: uuid(),
+    bookmarks: [],
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos .",
     likes: {

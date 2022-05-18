@@ -20,3 +20,60 @@ export const deletePostService = (postId, token) =>
       authorization: token,
     },
   });
+
+export const likePostService = (postId, token) =>
+  axios.post(
+    `/api/posts/like/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const dislikePostService = (postId, token) =>
+  axios.post(
+    `/api/posts/dislike/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const addToBookmarkService = (postId, token) =>
+  axios.post(
+    `/api/users/bookmark/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const removeFromBookmarkService = (postId, token) =>
+  axios.post(
+    `/api/users/remove-bookmark/${postId}`,
+    {},
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );
+
+export const addCommentService = (postId, commentData, token) =>
+  axios.post(
+    `/api/comments/add/${postId}`,
+    {
+      commentData,
+    },
+    {
+      headers: {
+        authorization: token,
+      },
+    }
+  );

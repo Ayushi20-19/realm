@@ -1,14 +1,21 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import {
+  addCommentService,
+  addToBookmarkService,
   createPostService,
   deletePostService,
+  dislikePostService,
   getAllPostService,
+  likePostService,
+  removeFromBookmarkService,
 } from "../services/posts.service";
 
 const initialState = {
   status: "idle",
   error: null,
   posts: [],
+  bookmarks: [],
+  comments: [],
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
@@ -33,11 +40,50 @@ export const createPost = createAsyncThunk(
 );
 
 export const deletePost = createAsyncThunk(
-  "post/deleteUserPost",
+  "posts/deleteUserPost",
   async ({ postId, token }, thunkAPI) => {
     try {
       console.log(postId);
       const response = await deletePostService(postId, token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+export const likeDislikePost = createAsyncThunk(
+  "posts/likeDislikePost",
+  async ({ postId, isLiked, token }, thunkAPI) => {
+    try {
+      const response = isLiked
+        ? await dislikePostService(postId, token)
+        : await likePostService(postId, token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const addRemoveBookmark = createAsyncThunk(
+  "posts/addRemoveBookmark",
+  async ({ postId, isBookmarked, token }, thunkAPI) => {
+    try {
+      const response = isBookmarked
+        ? await removeFromBookmarkService(postId, token)
+        : await addToBookmarkService(postId, token);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk(
+  "posts/addComment",
+  async ({ postId, commentData, token }, thunkAPI) => {
+    try {
+      const response = await addCommentService(postId, commentData, token);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -83,6 +129,43 @@ const postSlice = createSlice({
       state.posts = payload.posts;
     },
     [deletePost.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
+
+    //like and dislike post
+    [likeDislikePost.pending]: (state) => {
+      state.status = "pending";
+    },
+    [likeDislikePost.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.posts = payload.posts;
+    },
+    [likeDislikePost.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
+    //add and remove from bookmark
+    [addRemoveBookmark.pending]: (state) => {
+      state.status = "pending";
+    },
+    [addRemoveBookmark.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.bookmarks = payload;
+    },
+    [addRemoveBookmark.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
+    //add comment
+    [addComment.pending]: (state) => {
+      state.status = "pending";
+    },
+    [addComment.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.comments = payload;
+    },
+    [addComment.rejected]: (state, { payload }) => {
       state.status = "rejected";
       state.error = payload;
     },
