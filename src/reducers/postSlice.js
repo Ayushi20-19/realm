@@ -80,12 +80,9 @@ export const addRemoveBookmark = createAsyncThunk(
 );
 
 export const addComment = createAsyncThunk(
-  "post/addComment",
+  "posts/addComment",
   async ({ postId, commentData, token }, thunkAPI) => {
-    console.log("🚀 ~ file: add comment", postId, commentData, token);
-
     try {
-      const token = localStorage.getItem("token");
       const response = await addCommentService(postId, commentData, token);
       return response.data;
     } catch (error) {
@@ -160,7 +157,7 @@ const postSlice = createSlice({
       state.status = "rejected";
       state.error = payload;
     },
-    //add and remove from bookmark
+    //add comment
     [addComment.pending]: (state) => {
       state.status = "pending";
     },

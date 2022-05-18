@@ -16,7 +16,7 @@ const Feed = () => {
   useEffect(() => {
     dispatch(getAllPosts());
   }, [dispatch, bookmarks, comments]);
-  console.log(posts);
+
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>
@@ -30,6 +30,8 @@ const Feed = () => {
         )}
       </div>
       <div className='hidden sm:block'>
+        <FollowCard />
+        <FollowCard />
         <FollowCard />
         <FollowCard />
         <FollowCard />

@@ -19,11 +19,7 @@ const PostCard = ({ ...posts }) => {
     (like) => like.username === user.username
   );
 
-  const isBookmarkedd = () => {
-    return bookmarks.bookmarks?.find((id) => id === postId) ? true : false;
-  };
-
-  const isBookmarked = isBookmarkedd() ? true : false;
+  const isBookmarked = bookmarks.bookmarks?.some((id) => id === postId);
 
   return (
     <div>
@@ -82,7 +78,8 @@ const PostCard = ({ ...posts }) => {
               </div>
               <div className='p-3  '>
                 <p className='text-sm mb-1'>{posts.content}</p>
-                {/* <img
+                {/*commented purpously 
+                <img
                   src='https://friendkit.cssninja.io/assets/img/demo/unsplash/2.jpg'
                   alt=''
                   className='object-cover object-center w-full h-72 bg-coolGray-500 my-1'
@@ -111,7 +108,6 @@ const PostCard = ({ ...posts }) => {
                       title='Add a comment'
                       className='flex items-center justify-center'>
                       <i class='fal fa-comment  mr-1 hover:text-teal-400 text-xl'></i>
-                      {/* <i class="fas fa-comment  mr-1 hover:text-teal-400 text-xl"></i> */}
                     </button>
                     {posts.comments.length}
                     <button
@@ -146,8 +142,8 @@ const PostCard = ({ ...posts }) => {
                   {posts.comments.slice(0, 4)?.map((val) => (
                     <>
                       <p className='text-sm'>
-                        <span className='text-base font-semibold'>
-                          {val.username}{" "}
+                        <span className='text-base font-semibold mr-1'>
+                          {val.username}
                         </span>
                         {val.text}
                       </p>
@@ -166,7 +162,7 @@ const PostCard = ({ ...posts }) => {
                     value={commentData}
                     type='text'
                     placeholder='Add a comment...'
-                    className='w-full py-0.5 bg-transparent border-none rounded text-sm pl-0 text-coolGray-100'
+                    className='w-full py-0.5  bg-transparent border-none rounded text-sm pl-1 text-coolGray-100'
                   />
                 </div>
               </div>
