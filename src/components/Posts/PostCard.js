@@ -7,10 +7,13 @@ import {
   addRemoveBookmark,
   addComment,
 } from "../../reducers/postSlice";
+import { useEffect } from "react";
+
 const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
+  const [commentsList, setCommentsLists] = useState("");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
   const { bookmarks } = useSelector((store) => store.posts);
@@ -20,9 +23,18 @@ const PostCard = ({ ...posts }) => {
   );
 
   const isBookmarked = bookmarks.bookmarks?.some((id) => id === postId);
+  useEffect(() => {
+    if (posts.comments) {
+      setCommentsLists(
+        [...posts.comments].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+      );
+    }
+  }, [posts.comments]);
 
   return (
-    <div>
+    <div key={posts._id}>
       <div className='container main-post-container  mx-auto w-full'>
         <div>
           <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
@@ -139,7 +151,7 @@ const PostCard = ({ ...posts }) => {
                   </div>
                 </div>
                 <div className='space-y-3'>
-                  {posts.comments.slice(0, 4)?.map((val) => (
+                  {commentsList?.slice(0, 4)?.map((val) => (
                     <>
                       <p className='text-sm'>
                         <span className='text-base font-semibold mr-1'>
