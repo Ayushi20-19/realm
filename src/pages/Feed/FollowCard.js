@@ -1,15 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { followUnfollowUser } from "../../reducers/userSlice";
 
 const FollowCard = ({ ...data }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const userId = data._id;
   const { token, user } = useSelector((store) => store.auth);
   const isFollowed = user.following.some((id) => id._id === userId);
 
   return (
-    <div>
+    <div key={data._id}>
       <div class='bg-white rounded-md shadow-md sm:w-96 bg-coolGray-900  text-coolGray-100 px-3 w-fit m-1 mb-2'>
         <div className='flex items-center justify-between py-2'>
           <div className='flex items-center space-x-2 '>
@@ -21,6 +23,7 @@ const FollowCard = ({ ...data }) => {
 
             <div className='-space-y-1 w-16  overflow-hidden cursor-pointer'>
               <p
+                onClick={() => navigate(`/profile/${userId}`)}
                 title={data.username}
                 className=' font-semibold leading-none text-base mr-1 truncate  overflow-hidden  ...'>
                 {data.username}

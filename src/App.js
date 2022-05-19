@@ -6,11 +6,13 @@ import Profile from "./pages/Profile/Profile";
 import { Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore/Explore";
 import { PrivateRoute } from "./components/PrivateRoutes/PrivateRoute";
+import { useSelector } from "react-redux";
 
 function App() {
+  const { token } = useSelector((store) => store.auth);
   return (
     <div className='dark:bg-slate-900 dark:text-white '>
-      <Navbar />
+      {token && <Navbar />}
       <Routes>
         <Route
           path='/'
@@ -28,7 +30,7 @@ function App() {
           }></Route>
         <Route path='/auth' element={<Login />}></Route>
         <Route
-          path='/profile'
+          path='/profile/:profileID'
           element={
             <PrivateRoute>
               <Profile />

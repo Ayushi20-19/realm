@@ -1,9 +1,15 @@
-import { BookmarkIcon } from "@heroicons/react/outline";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
+import { followUnfollowUser } from "../../reducers/userSlice";
 
-const ProfileCard = () => {
+const ProfileCard = ({ ...userData }) => {
+  const dispatch = useDispatch();
+  const { token, user } = useSelector((store) => store.auth);
+  const userId = userData._id;
+  const isFollowed = user.following.some((id) => id._id === userId);
+
   return (
-    <div>
+    <div key={userData._id}>
       <div class='font-sans leading-tight min-h-screen bg-grey-lighter p-8'>
         <div class='max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg'>
           <div>
@@ -21,21 +27,11 @@ const ProfileCard = () => {
                 alt=''
               />
               <div class='py-2'>
-                <h3 class='font-bold text-2xl mb-1'>Adarsh Balika</h3>
+                <h3 class='font-bold text-2xl mb-1'>
+                  {userData.firstName} {userData.lastName}
+                </h3>
                 <div class='inline-flex text-grey-dark sm:flex items-center'>
-                  <svg
-                    class='h-5 w-5 text-grey mr-1'
-                    fill='currentColor'
-                    xmlns='http://www.w3.org/2000/svg'
-                    viewBox='0 0 24 24'
-                    width='24'
-                    height='24'>
-                    <path
-                      class='heroicon-ui'
-                      d='M5.64 16.36a9 9 0 1 1 12.72 0l-5.65 5.66a1 1 0 0 1-1.42 0l-5.65-5.66zm11.31-1.41a7 7 0 1 0-9.9 0L12 19.9l4.95-4.95zM12 14a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-2a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'
-                    />
-                  </svg>
-                  New York, NY
+                  @{userData.username}
                 </div>
               </div>
             </div>
@@ -45,12 +41,29 @@ const ProfileCard = () => {
                   Link Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 </a>
               </div>
-
-              <button
-                type='button'
-                class='text-white bg-lg flex-1 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-4 py-1.5 text-center mr-1 mb-1 m-2'>
-                Follow
-              </button>
+              {user._id !== userData._id ? (
+                <button
+                  onClick={() =>
+                    dispatch(
+                      followUnfollowUser({
+                        userId,
+                        dispatch,
+                        isFollowed,
+                        token,
+                      })
+                    )
+                  }
+                  type='button'
+                  class='text-white bg-lg flex-1 focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-4 py-1.5 text-center mr-1 mb-1 m-2'>
+                  {isFollowed ? "Unfollow" : "Follow"}
+                </button>
+              ) : (
+                <button class='relative flex-end inline-flex items-center justify-center p-0.5 mb-2  overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-lg group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-teal-200 dark:focus:ring-green-800'>
+                  <span class='relative px-4 py-1.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0'>
+                    Edit Profile
+                  </span>
+                </button>
+              )}
             </div>
           </div>
           <div class='px-4 py-4'>
@@ -58,15 +71,19 @@ const ProfileCard = () => {
               <div class='w-full uppercase text-center tracking-wide flex justify-around'>
                 <div class='posts'>
                   <p class='text-gray-400 text-sm'>Posts</p>
-                  <p class='text-lg font-semibold text-blue-300'>76</p>
+                  <p class='text-lg font-semibold text-teal-600'>76</p>
                 </div>
                 <div class='followers'>
                   <p class='text-gray-400 text-sm'>Followers</p>
-                  <p class='text-lg font-semibold text-blue-300'>964</p>
+                  <p class='text-lg font-semibold text-teal-600'>
+                    {userData.followers?.length}
+                  </p>
                 </div>
                 <div class='following'>
                   <p class='text-gray-400 text-sm'>Following</p>
-                  <p class='text-lg font-semibold text-blue-300'>34</p>
+                  <p class='text-lg font-semibold text-teal-600'>
+                    {userData.following?.length}
+                  </p>
                 </div>
               </div>
             </div>

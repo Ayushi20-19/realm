@@ -1,13 +1,13 @@
 import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../reducers/authSlice";
 const navigation = [
   { name: "NewsFeed", to: "/", current: true },
   { name: "Explore", to: "/explore", current: false },
-  // { name: "Bookmark", to: "/", current: false },
+  { name: "Bookmark", to: "/", current: false },
 ];
 
 function classNames(...classes) {
@@ -16,6 +16,9 @@ function classNames(...classes) {
 
 export default function Navbar() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { user } = useSelector((store) => store.auth);
+  const userID = user._id;
   return (
     <Disclosure
       as='nav'
@@ -89,14 +92,14 @@ export default function Navbar() {
                     <Menu.Items className='origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'>
                       <Menu.Item>
                         {({ active }) => (
-                          <NavLink
-                            to='/profile'
+                          <button
+                            onClick={() => navigate(`/profile/${userID}`)}
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "bg-gray-100 w-full" : "",
+                              "block px-4 py-2 text-m w-full text-gray-700"
                             )}>
                             Your Profile
-                          </NavLink>
+                          </button>
                         )}
                       </Menu.Item>
 
@@ -106,8 +109,8 @@ export default function Navbar() {
                             onClick={() => dispatch(logout())}
                             to='/auth'
                             className={classNames(
-                              active ? "bg-gray-100" : "",
-                              "block px-4 py-2 text-sm text-gray-700"
+                              active ? "bg-gray-100 w-full" : "",
+                              " block text-center text-red-400  px-4 py-2 text-m w-full text-gray-700"
                             )}>
                             Log out
                           </NavLink>
