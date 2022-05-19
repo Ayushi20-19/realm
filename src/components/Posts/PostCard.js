@@ -1,4 +1,3 @@
-import { current } from "@reduxjs/toolkit";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -13,7 +12,7 @@ const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
-  const [commentsList, setCommentsLists] = useState("");
+  const [commentsList, setCommentsLists] = useState(posts.comments || "");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
   const { bookmarks } = useSelector((store) => store.posts);
@@ -32,13 +31,13 @@ const PostCard = ({ ...posts }) => {
       );
     }
   }, [posts.comments]);
-
+  console.log("object");
   return (
     <div key={posts._id}>
       <div className='container main-post-container  mx-auto w-full'>
         <div>
           <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
-            <div className='rounded-md shadow-md sm:w-96 bg-coolGray-900 text-coolGray-100'>
+            <div className='rounded-md shadow-md sm:wp-90 w-96 bg-coolGray-900 text-coolGray-100'>
               <div className='flex items-center justify-between p-3'>
                 <div className='flex items-center space-x-2'>
                   <img
