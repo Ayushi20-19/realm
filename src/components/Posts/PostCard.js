@@ -36,7 +36,7 @@ const PostCard = ({ ...posts }) => {
     <div key={posts._id}>
       <div className='container main-post-container  mx-auto w-full'>
         <div>
-          <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
+          <div className='main-post-container p-3 px-6 flex justify-center items-center'>
             <div className='rounded-md shadow-md sm:wp-90 w-96 bg-coolGray-900 text-coolGray-100'>
               <div className='flex items-center justify-between p-3'>
                 <div className='flex items-center space-x-2'>

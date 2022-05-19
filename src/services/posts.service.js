@@ -14,6 +14,10 @@ export const createPostService = (postData, token) =>
       },
     }
   );
+
+export const getUserPostService = (userName) =>
+  axios.get(`/api/posts/user/${userName}`);
+
 export const deletePostService = (postId, token) =>
   axios.delete(`/api/posts/${postId}`, {
     headers: {

@@ -6,7 +6,7 @@ import { followUnfollowUser } from "../../reducers/userSlice";
 const FollowCard = ({ ...data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = data._id;
+  const userId = data.username;
   const { token, user } = useSelector((store) => store.auth);
   const isFollowed = user.following.some((id) => id._id === userId);
 

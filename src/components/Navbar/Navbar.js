@@ -17,7 +17,7 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((store) => store.auth);
-  const userID = user._id;
+  const userID = user.username;
   return (
     <Disclosure
       as='nav'

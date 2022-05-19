@@ -7,10 +7,11 @@ const ProfileCard = ({ ...userData }) => {
   const { token, user } = useSelector((store) => store.auth);
   const userId = userData._id;
   const isFollowed = user.following.some((id) => id._id === userId);
+  const { userPosts } = useSelector((store) => store.posts);
 
   return (
     <div key={userData._id}>
-      <div className='font-sans leading-tight min-h-screen bg-grey-lighter p-8'>
+      <div className='font-sans leading-tight bg-grey-lighter p-8'>
         <div className='max-w-sm mx-auto bg-white rounded-lg overflow-hidden shadow-lg'>
           <div>
             <img
@@ -71,7 +72,9 @@ const ProfileCard = ({ ...userData }) => {
               <div className='w-full uppercase text-center tracking-wide flex justify-around'>
                 <div className='posts'>
                   <p className='text-gray-400 text-sm'>Posts</p>
-                  <p className='text-lg font-semibold text-teal-600'>76</p>
+                  <p className='text-lg font-semibold text-teal-600'>
+                    {userPosts?.length}
+                  </p>
                 </div>
                 <div className='followers'>
                   <p className='text-gray-400 text-sm'>Followers</p>

@@ -56,7 +56,7 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    username: "shubhamsoni",
+    username: "jhongraham",
     comments: [
       {
         _id: uuid(),
