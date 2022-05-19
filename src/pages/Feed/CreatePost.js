@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { createPost } from "../../reducers/postSlice";
 const CreatePost = () => {
   const [postData, setPostData] = useState("");
-  const { token } = useSelector((store) => store.auth);
+  const { token, user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const inputPostHandler = (e) => {
     setPostData(e.target.value);
@@ -21,12 +21,14 @@ const CreatePost = () => {
                   className='object-cover object-center w-8 h-8 rounded-full shadow-sm bg-coolGray-500 border-coolGray-700'
                 />
                 <div className='-space-y-1'>
-                  <h2 className='text-sm font-semibold leading-none'>Adarsh</h2>
+                  <h2 className='text-sm font-semibold leading-none'>
+                    {user.username}
+                  </h2>
                 </div>
               </div>
             </div>
             <textarea
-              placeholder='create a post'
+              placeholder="What's in your mind?"
               value={postData}
               className='bg-cyan p-3 px-6 text-m w-full focus:outline-none'
               onChange={(e) => inputPostHandler(e)}></textarea>

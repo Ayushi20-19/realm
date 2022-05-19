@@ -31,7 +31,7 @@ const PostCard = ({ ...posts }) => {
       );
     }
   }, [posts.comments]);
-  console.log("object");
+
   return (
     <div key={posts._id}>
       <div className='container main-post-container  mx-auto w-full'>
@@ -50,7 +50,7 @@ const PostCard = ({ ...posts }) => {
                       {posts.username}
                     </h2>
                     <span className='inline-block text-xs leading-none text-coolGray-400'>
-                      New York City
+                      New York
                     </span>
                   </div>
                 </div>
@@ -76,10 +76,9 @@ const PostCard = ({ ...posts }) => {
                         </li>
                         <li
                           className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
-                          onClick={() => (
-                            dispatch(deletePost({ postId, token })),
-                            console.log(postId)
-                          )}>
+                          onClick={() =>
+                            dispatch(deletePost({ postId, token }))
+                          }>
                           Delete
                         </li>
                       </ul>

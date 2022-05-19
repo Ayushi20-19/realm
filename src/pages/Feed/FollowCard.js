@@ -25,11 +25,12 @@ const FollowCard = ({ ...data }) => {
               <p
                 onClick={() => navigate(`/profile/${userId}`)}
                 title={data.username}
-                className=' font-semibold leading-none text-base mr-1 truncate  overflow-hidden  ...'>
+                className=' font-semibold leading-none text-base m-2 truncate  overflow-hidden  ...'>
                 {data.username}
               </p>
             </div>
           </div>
+
           <button
             onClick={() =>
               dispatch(
