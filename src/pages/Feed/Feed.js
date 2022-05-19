@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PostCard from "../../components/Posts/PostCard";
 import CreatePost from "./CreatePost";
 import FollowCard from "./FollowCard";
@@ -13,15 +13,22 @@ const Feed = () => {
   );
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
+  const [feedPosts, setFeedPosts] = useState();
   const dispatch = useDispatch();
-
+  useEffect(() => {
+    if (posts) {
+      setFeedPosts(
+        [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      );
+    }
+  }, [posts]);
   useEffect(() => {
     dispatch(getAllPosts());
   }, [dispatch, bookmarks, comments]);
   useEffect(() => {
     dispatch(getAllUsers());
   }, [user]);
-  console.log(user, users);
+
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='hidden wp-20 sm:block'></div>
@@ -29,7 +36,7 @@ const Feed = () => {
         <CreatePost />
         <Tab />
         {status !== "idle" || error ? (
-          posts?.map((post) => <PostCard {...post} />)
+          feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
           <p>{status}</p>
         )}

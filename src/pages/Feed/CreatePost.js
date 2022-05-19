@@ -27,11 +27,14 @@ const CreatePost = () => {
             </div>
             <textarea
               placeholder='create a post'
+              value={postData}
               className='bg-cyan p-3 px-6 text-xl'
               onChange={(e) => inputPostHandler(e)}></textarea>
             <div className='  p-3 px-6 '>
               <button
-                onClick={() => dispatch(createPost({ postData, token }))}
+                onClick={() =>
+                  dispatch(createPost({ postData, token }), setPostData(""))
+                }
                 type='button'
                 class='text-white bg-lg focus:ring-4 focus:outline-none focus:ring-teal-300 dark:focus:ring-teal-800 font-medium rounded-lg text-sm px-4 py-1.5 text-center mr-1 mb-1 m-2'>
                 Post
