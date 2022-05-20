@@ -27,7 +27,7 @@ const Feed = () => {
   }, [dispatch, bookmarks, comments]);
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [user]);
+  }, []);
 
   return (
     <div className='flex m-auto w-full justify-center '>

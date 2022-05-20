@@ -6,7 +6,7 @@ const ProfileCard = ({ ...userData }) => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
   const userId = userData._id;
-  const isFollowed = user.following.some((id) => id._id === userId);
+  const isFollowed = user.following?.some((id) => id._id === userId);
   const { userPosts } = useSelector((store) => store.posts);
 
   return (
@@ -42,7 +42,7 @@ const ProfileCard = ({ ...userData }) => {
                   Link Lorem ipsum dolor sit amet consectetur, adipisicing elit.
                 </a>
               </div>
-              {user._id !== userData._id ? (
+              {user.username !== userData.username ? (
                 <button
                   onClick={() =>
                     dispatch(
