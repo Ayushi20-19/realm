@@ -6,6 +6,7 @@ import {
   deletePostService,
   dislikePostService,
   getAllPostService,
+  getUserPostService,
   likePostService,
   removeFromBookmarkService,
 } from "../services/posts.service";
@@ -16,6 +17,7 @@ const initialState = {
   posts: [],
   bookmarks: [],
   comments: [],
+  userPosts: [],
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
@@ -26,7 +28,17 @@ export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
     return error;
   }
 });
-
+export const getUserPosts = createAsyncThunk(
+  "posts/getUserPosts",
+  async (userName, thunkAPI) => {
+    try {
+      const response = await getUserPostService(userName);
+      return response.data.posts;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 export const createPost = createAsyncThunk(
   "posts/createPost",
   async ({ postData, token }, thunkAPI) => {
@@ -119,7 +131,11 @@ const postSlice = createSlice({
       state.posts = payload;
       state.status = "rejected";
     },
-
+    //get user post
+    [getUserPosts.fulfilled]: (state, { payload }) => {
+      state.postStatus = "fulfilled";
+      state.userPosts = payload;
+    },
     //delete post
     [deletePost.pending]: (state) => {
       state.status = "pending";

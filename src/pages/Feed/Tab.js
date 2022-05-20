@@ -4,7 +4,7 @@ const Tab = () => {
   return (
     <div className='container main-post-container mx-auto  '>
       <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
-        <div className='rounded-md shadow-md w-96  bg-coolGray-900 text-coolGray-100'>
+        <div className='rounded-md shadow-md sm:wp-90 w-96 bg-coolGray-900 text-coolGray-100'>
           <ul class=' text-sm w-full font-medium text-center text-gray-500 rounded-lg divide-x divide-gray-200 shadow flex dark:divide-gray-700 dark:text-gray-400'>
             <li class='w-full'>
               <a

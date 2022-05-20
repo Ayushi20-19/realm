@@ -27,6 +27,17 @@ export const userSignup = createAsyncThunk("auth/userSignup", async () => {
   } catch (error) {}
 });
 
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async (user, thunkAPI) => {
+    try {
+      return user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -58,16 +69,25 @@ const authSlice = createSlice({
     [userSignup.pending]: (state) => {
       state.authStatus = "pending";
     },
-    [userSignup.fulfilled]: (state, action) => {
+    [userSignup.fulfilled]: (state, { payload }) => {
       state.authStatus = "fulfilled";
-      state.token = action.payload.encodedToken;
-      state.user = action.payload.createdUser;
+      state.token = payload.encodedToken;
+      state.user = payload.createdUser;
       localStorage.setItem("token", state.token);
       localStorage.setItem("user", JSON.stringify(state.user));
     },
-    [userSignup.rejected]: (state, action) => {
+    [userSignup.rejected]: (state, { payload }) => {
       state.authStatus = "Error";
-      state.error = action.payload;
+      state.error = payload;
+    },
+    [updateUser.fulfilled]: (state, { payload }) => {
+      state.authStatus = "fulfilled";
+      state.user = payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    [updateUser.rejected]: (state, { payload }) => {
+      state.authStatus = "Error";
+      state.error = payload;
     },
   },
 });

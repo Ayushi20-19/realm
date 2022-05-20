@@ -1,4 +1,3 @@
-import { current } from "@reduxjs/toolkit";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -7,10 +6,13 @@ import {
   addRemoveBookmark,
   addComment,
 } from "../../reducers/postSlice";
+import { useEffect } from "react";
+
 const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
+  const [commentsList, setCommentsLists] = useState(posts.comments || "");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
   const { bookmarks } = useSelector((store) => store.posts);
@@ -20,13 +22,22 @@ const PostCard = ({ ...posts }) => {
   );
 
   const isBookmarked = bookmarks.bookmarks?.some((id) => id === postId);
+  useEffect(() => {
+    if (posts.comments) {
+      setCommentsLists(
+        [...posts.comments].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
+      );
+    }
+  }, [posts.comments]);
 
   return (
-    <div>
+    <div key={posts._id}>
       <div className='container main-post-container  mx-auto w-full'>
         <div>
-          <div className='main-post-container p-3 px-6 min-h-48 flex justify-center items-center'>
-            <div className='rounded-md shadow-md sm:w-96 bg-coolGray-900 text-coolGray-100'>
+          <div className='main-post-container p-3 px-6 flex justify-center items-center'>
+            <div className='rounded-md shadow-md sm:wp-90 w-96 bg-coolGray-900 text-coolGray-100'>
               <div className='flex items-center justify-between p-3'>
                 <div className='flex items-center space-x-2'>
                   <img
@@ -39,7 +50,7 @@ const PostCard = ({ ...posts }) => {
                       {posts.username}
                     </h2>
                     <span className='inline-block text-xs leading-none text-coolGray-400'>
-                      New York City
+                      New York
                     </span>
                   </div>
                 </div>
@@ -65,10 +76,9 @@ const PostCard = ({ ...posts }) => {
                         </li>
                         <li
                           className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
-                          onClick={() => (
-                            dispatch(deletePost({ postId, token })),
-                            console.log(postId)
-                          )}>
+                          onClick={() =>
+                            dispatch(deletePost({ postId, token }))
+                          }>
                           Delete
                         </li>
                       </ul>
@@ -139,7 +149,7 @@ const PostCard = ({ ...posts }) => {
                   </div>
                 </div>
                 <div className='space-y-3'>
-                  {posts.comments.slice(0, 4)?.map((val) => (
+                  {commentsList?.slice(0, 4)?.map((val) => (
                     <>
                       <p className='text-sm'>
                         <span className='text-base font-semibold mr-1'>
