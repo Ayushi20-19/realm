@@ -37,7 +37,9 @@ const Bookmark = () => {
     <div>
       {bookmarkedPosts.length > 0 ? (
         <>
-          <h1>Book mark Posts {bookmarkedPosts.length} </h1>
+          <div className='text-center w-full my-3 text-2xl font-semibold'>
+            <p>{bookmarkedPosts.length} posts in bookmark </p>
+          </div>
           {bookmarkedPosts.map((post) => (
             <PostCard key={post._id} {...post} />
           ))}
