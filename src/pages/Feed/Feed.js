@@ -15,17 +15,29 @@ const Feed = () => {
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
   const [feedPosts, setFeedPosts] = useState();
+  const [feedPostsMode, setFeedPostsMode] = useState("latest");
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (posts) {
+    if (posts && feedPostsMode === "latest") {
       setFeedPosts(
         [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
+    } else if (posts && feedPostsMode === "trending") {
+      console.log("object", posts);
+      setFeedPosts(
+        [...posts].sort(
+          (a, b) =>
+            parseInt(b.likes.likeCount) +
+            b.comments.length -
+            parseInt(a.likes.likeCount + a.comments.length)
+        )
+      );
     }
-  }, [posts]);
+  }, [posts, feedPostsMode]);
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments]);
+  }, [dispatch, bookmarks, comments, posts.likes]);
   useEffect(() => {
     dispatch(getAllUsers());
   }, []);
@@ -35,7 +47,10 @@ const Feed = () => {
       <div className='hidden wp-20 sm:block'></div>
       <div className='sm:42'>
         <CreatePost />
-        <Tab />
+        <Tab
+          setFeedPostsMode={setFeedPostsMode}
+          feedPostsMode={feedPostsMode}
+        />
         {status !== "idle" || error ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
