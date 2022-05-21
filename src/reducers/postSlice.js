@@ -96,6 +96,7 @@ export const addComment = createAsyncThunk(
   async ({ postId, commentData, token }, thunkAPI) => {
     try {
       const response = await addCommentService(postId, commentData, token);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
