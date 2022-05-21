@@ -9,9 +9,6 @@ const Explore = () => {
   const { posts, status, error, bookmarks, comments } = useSelector(
     (store) => store.posts
   );
-
-  //   const { users } = useSelector((store) => store.users);
-  //   const { user } = useSelector((store) => store.auth);
   const [feedPosts, setFeedPosts] = useState();
 
   const dispatch = useDispatch();
