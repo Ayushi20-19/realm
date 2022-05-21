@@ -7,6 +7,7 @@ import { logout } from "../../reducers/authSlice";
 const navigation = [
   { name: "NewsFeed", to: "/" },
   { name: "Bookmark", to: "/bookmark" },
+  { name: "Explore", to: "/explore" },
 ];
 
 function classNames(...classes) {

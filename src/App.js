@@ -8,6 +8,7 @@ import { Route, Routes } from "react-router-dom";
 import { PrivateRoute } from "./components/PrivateRoutes/PrivateRoute";
 import { useSelector } from "react-redux";
 import { Bookmark } from "./pages/Bookmark/Bookmark";
+import Explore from "./pages/Explore/Explore";
 
 function App() {
   const { token } = useSelector((store) => store.auth);
@@ -27,6 +28,13 @@ function App() {
           element={
             <PrivateRoute>
               <Bookmark />
+            </PrivateRoute>
+          }></Route>
+        <Route
+          path='/explore'
+          element={
+            <PrivateRoute>
+              <Explore />
             </PrivateRoute>
           }></Route>
         <Route path='/auth' element={<Login />}></Route>
