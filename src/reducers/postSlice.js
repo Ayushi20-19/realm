@@ -70,6 +70,7 @@ export const likeDislikePost = createAsyncThunk(
       const response = isLiked
         ? await dislikePostService(postId, token)
         : await likePostService(postId, token);
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
