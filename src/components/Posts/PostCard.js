@@ -15,13 +15,16 @@ const PostCard = ({ ...posts }) => {
   const [commentsList, setCommentsLists] = useState(posts.comments || "");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
-  const { bookmarks } = useSelector((store) => store.posts);
+  const { bookmarks, comments, userPosts } = useSelector(
+    (store) => store.posts
+  );
 
   const isLiked = posts.likes.likedBy?.some(
     (like) => like.username === user.username
   );
 
   const isBookmarked = bookmarks.bookmarks?.some((id) => id === postId);
+
   useEffect(() => {
     if (posts.comments) {
       setCommentsLists(
@@ -30,7 +33,7 @@ const PostCard = ({ ...posts }) => {
         )
       );
     }
-  }, [posts.comments]);
+  }, [posts.comments, comments.comments]);
 
   return (
     <div key={posts._id}>
