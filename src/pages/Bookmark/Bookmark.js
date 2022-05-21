@@ -32,7 +32,7 @@ const Bookmark = () => {
         bookmarkedPosts.map((post) => <PostCard key={post._id} {...post} />)
       ) : (
         <div className='text-center w-full my-3 text-xl'>
-          <h2> No Post is bookmmarked yet</h2>
+          <h2> No Post is bookmarked yet</h2>
         </div>
       )}
     </div>
