@@ -70,6 +70,7 @@ const authSlice = createSlice({
       state.authStatus = "pending";
     },
     [userSignup.fulfilled]: (state, { payload }) => {
+      console.log("🚀 ~ file: authSlice.js ~ line 73 ~ payload", payload);
       state.authStatus = "fulfilled";
       state.token = payload.encodedToken;
       state.user = payload.createdUser;

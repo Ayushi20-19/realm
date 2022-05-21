@@ -6,9 +6,11 @@ import { followUnfollowUser } from "../../reducers/userSlice";
 const FollowCard = ({ ...data }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const userId = data.username;
+  const userId = data._id;
+  const userUrl = data.username;
   const { token, user } = useSelector((store) => store.auth);
-  const isFollowed = user.following.some((id) => id._id === userId);
+
+  const isFollowed = user.following?.some((id) => id._id === userId);
 
   return (
     <div key={data._id}>
@@ -23,7 +25,7 @@ const FollowCard = ({ ...data }) => {
 
             <div className='-space-y-1 w-19  overflow-hidden cursor-pointer'>
               <p
-                onClick={() => navigate(`/profile/${userId}`)}
+                onClick={() => navigate(`/profile/${userUrl}`)}
                 title={data.username}
                 className=' font-semibold leading-none text-base m-2 truncate  overflow-hidden  ...'>
                 {data.username}

@@ -32,6 +32,7 @@ export const followUnfollowUser = createAsyncThunk(
         : await unfollowUserService(userId, token);
       dispatch(updateUser(response.data.user));
       dispatch(getAllUsers());
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
