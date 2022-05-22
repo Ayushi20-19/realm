@@ -13,7 +13,7 @@ const Profile = () => {
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
   const { comments, posts } = useSelector((store) => store.posts);
-  const [postss, setUserPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [userData, setUserData] = useState("");
 
   useEffect(() => {
@@ -41,10 +41,11 @@ const Profile = () => {
   return (
     <div>
       {userData && (
-        <ProfileCard postsLength={postss.length} userData={userData} />
+        <ProfileCard postsLength={userPosts.length} userData={userData} />
       )}
 
-      {postss.length > 0 && postss?.map((posts) => <PostCard {...posts} />)}
+      {userPosts.length > 0 &&
+        userPosts?.map((posts) => <PostCard {...posts} />)}
     </div>
   );
 };
