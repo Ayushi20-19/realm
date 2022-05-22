@@ -24,7 +24,6 @@ const Feed = () => {
         [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
     } else if (posts && feedPostsMode === "trending") {
-      console.log("object", posts);
       setFeedPosts(
         [...posts].sort(
           (a, b) =>

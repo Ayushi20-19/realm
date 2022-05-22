@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { userLoginService, userSignUpService } from "../services/auth.service";
-
+import axios from "axios";
 const initialState = {
   status: "idle",
   error: null,
@@ -32,6 +32,25 @@ export const updateUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       return user;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
+export const editUserProfile = createAsyncThunk(
+  "auth/editProfile",
+  async ({ userData, token }, thunkAPI) => {
+    try {
+      const response = await axios.post(
+        "/api/users/edit",
+        {
+          userData,
+        },
+        { headers: { authorization: token } }
+      );
+
+      return { data: response.data, status: response.status };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -70,7 +89,6 @@ const authSlice = createSlice({
       state.authStatus = "pending";
     },
     [userSignup.fulfilled]: (state, { payload }) => {
-      console.log("🚀 ~ file: authSlice.js ~ line 73 ~ payload", payload);
       state.authStatus = "fulfilled";
       state.token = payload.encodedToken;
       state.user = payload.createdUser;
@@ -89,6 +107,18 @@ const authSlice = createSlice({
     [updateUser.rejected]: (state, { payload }) => {
       state.authStatus = "Error";
       state.error = payload;
+    },
+    [editUserProfile.pending]: (state, action) => {
+      state.btnStatus = "loading";
+    },
+    [editUserProfile.fulfilled]: (state, { payload }) => {
+      state.btnStatus = "fulfilled";
+      state.user = payload.data.user;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
+    [editUserProfile.rejected]: (state, action) => {
+      state.btnStatus = "failed";
+      console.error(action);
     },
   },
 });
