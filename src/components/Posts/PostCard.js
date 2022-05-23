@@ -7,11 +7,13 @@ import {
   addComment,
 } from "../../reducers/postSlice";
 import { useEffect } from "react";
+import PostModal from "./PostModal";
 
 const PostCard = ({ ...posts }) => {
   const postId = posts._id;
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
+  const [showPostModal, setShowPostModal] = useState(false);
   const [commentsList, setCommentsLists] = useState(posts.comments || "");
   const dispatch = useDispatch();
   const { token, user } = useSelector((store) => store.auth);
@@ -74,7 +76,9 @@ const PostCard = ({ ...posts }) => {
 
                     {isOpenDropdown && (
                       <ul className='dropdown absolute text-sm px-1 py-2 rounded-lg  m-0 bg-teal-100 top-8 right-4 w-36 gap-1'>
-                        <li className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
+                        <li
+                          onClick={() => setShowPostModal(true)}
+                          className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
                           Edit
                         </li>
                         <li
@@ -183,6 +187,12 @@ const PostCard = ({ ...posts }) => {
           </div>
         </div>
       </div>
+      {showPostModal && (
+        <PostModal
+          setShowPostModal={setShowPostModal}
+          defaultData={posts.content}
+        />
+      )}
     </div>
   );
 };
