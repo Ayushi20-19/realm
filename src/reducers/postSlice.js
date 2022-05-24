@@ -46,7 +46,6 @@ export const deletePost = createAsyncThunk(
   "posts/deleteUserPost",
   async ({ postId, token }, thunkAPI) => {
     try {
-      console.log(postId);
       const response = await deletePostService(postId, token);
       return response.data;
     } catch (error) {
@@ -60,7 +59,7 @@ export const editUserPost = createAsyncThunk(
   async ({ postId, postData, token }, thunkAPI) => {
     try {
       const response = editUserPostService({ postId, postData, token });
-      return response.data;
+      return { data: response.data, postIsEdited: true };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -156,7 +155,8 @@ const postSlice = createSlice({
     },
     [editUserPost.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.posts = payload;
+      state.posts = payload.data;
+      state.postIsEdited = payload.postIsEdited;
     },
     [editUserPost.rejected]: (state, { payload }) => {
       state.status = "rejected";
