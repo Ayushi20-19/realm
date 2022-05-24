@@ -18,7 +18,7 @@ const FollowCard = ({ ...data }) => {
         <div className='flex items-center justify-between py-2'>
           <div className='flex items-center space-x-2 '>
             <img
-              src='https://friendkit.cssninja.io/assets/img/avatars/dan.jpg'
+              src={data.profilePic}
               alt=''
               className='object-cover object-center w-12 h-12 rounded-full shadow-sm bg-coolGray-500 border-coolGray-700'
             />

@@ -36,7 +36,9 @@ const ProfileModal = ({ setShowProfileModal, defaultData }) => {
     <div>
       <div class='fixed z-10 overflow-y-auto top-10 w-full left-0 ' id='modal'>
         <div class='flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
-          <div class='fixed inset-0 transition-opacity'>
+          <div
+            onClick={() => setShowProfileModal(false)}
+            class='fixed inset-0 transition-opacity'>
             <div class='absolute inset-0 bg-gray-900 opacity-75' />
           </div>
           <span class='hidden sm:inline-block sm:align-middle sm:h-screen'>
@@ -54,7 +56,7 @@ const ProfileModal = ({ setShowProfileModal, defaultData }) => {
                 value={userData.bio}
                 onChange={(e) => inputHandler(e)}
                 type='text'
-                class='w-full bg-gray-100 p-2 mt-2 mb-3'
+                class='w-full bg-teal-100 p-2 mt-2 mb-3'
               />
               <label>Url</label>
               <input
@@ -62,10 +64,10 @@ const ProfileModal = ({ setShowProfileModal, defaultData }) => {
                 value={userData.link}
                 onChange={(e) => inputHandler(e)}
                 type='text'
-                class='w-full bg-gray-100 p-2 mt-2 mb-3'
+                class='w-full bg-teal-100 p-2 mt-2 mb-3'
               />
             </div>
-            <div class='bg-gray-200 px-4 py-3 text-right'>
+            <div class='bg-teal-200 px-2 py-3 text-right'>
               <button
                 onClick={() => setShowProfileModal(false)}
                 type='button'

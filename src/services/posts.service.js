@@ -24,6 +24,12 @@ export const deletePostService = (postId, token) =>
       authorization: token,
     },
   });
+export const editUserPostService = ({ postId, postData, token }) =>
+  axios.post(
+    `/api/posts/edit/${postId}`,
+    { postData: postData },
+    { headers: { authorization: token } }
+  );
 
 export const likePostService = (postId, token) =>
   axios.post(

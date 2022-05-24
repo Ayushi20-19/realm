@@ -6,7 +6,7 @@ import {
   deletePostService,
   dislikePostService,
   getAllPostService,
-  getUserPostService,
+  editUserPostService,
   likePostService,
   removeFromBookmarkService,
 } from "../services/posts.service";
@@ -17,6 +17,8 @@ const initialState = {
   posts: [],
   bookmarks: [],
   comments: [],
+  postIsLiked: false,
+  postIsEdited: false,
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
@@ -44,7 +46,6 @@ export const deletePost = createAsyncThunk(
   "posts/deleteUserPost",
   async ({ postId, token }, thunkAPI) => {
     try {
-      console.log(postId);
       const response = await deletePostService(postId, token);
       return response.data;
     } catch (error) {
@@ -52,15 +53,28 @@ export const deletePost = createAsyncThunk(
     }
   }
 );
+
+export const editUserPost = createAsyncThunk(
+  "posts/editUserPost",
+  async ({ postId, postData, token }, thunkAPI) => {
+    try {
+      const response = editUserPostService({ postId, postData, token });
+      return { data: response.data, postIsEdited: true };
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const likeDislikePost = createAsyncThunk(
   "posts/likeDislikePost",
-  async ({ postId, isLiked, token }, thunkAPI) => {
+  async ({ postId, isLiked, token, dispatch }, thunkAPI) => {
     try {
       const response = isLiked
         ? await dislikePostService(postId, token)
         : await likePostService(postId, token);
-
-      return response.data;
+      dispatch(getAllPosts());
+      return { data: response.data, isLiked: !isLiked };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -135,6 +149,19 @@ const postSlice = createSlice({
       state.status = "rejected";
       state.error = payload;
     },
+    //edit post
+    [editUserPost.pending]: (state) => {
+      state.status = "pending";
+    },
+    [editUserPost.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.posts = payload.data;
+      state.postIsEdited = payload.postIsEdited;
+    },
+    [editUserPost.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
 
     //like and dislike post
     [likeDislikePost.pending]: (state) => {
@@ -142,7 +169,8 @@ const postSlice = createSlice({
     },
     [likeDislikePost.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.posts = payload.posts;
+      state.posts = payload.data.posts;
+      state.postIsLiked = payload.isLiked;
     },
     [likeDislikePost.rejected]: (state, { payload }) => {
       state.status = "rejected";
