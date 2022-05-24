@@ -1,20 +1,36 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { editUserPost } from "../../reducers/postSlice";
 
-const PostModal = ({ setShowPostModal, defaultData }) => {
+const PostModal = ({ setShowPostModal, defaultData, postId }) => {
   const [postData, setPostData] = useState(defaultData);
-
+  const { token } = useSelector((store) => store.auth);
+  const dispatch = useDispatch();
   const inputHandler = (e) => {
     setPostData(e.target.value);
   };
   const updateHandler = async (e) => {
     e.preventDefault();
+
+    dispatch(
+      editUserPost({
+        postId,
+        postData: { content: postData },
+        token,
+      })
+    );
+
+    setShowPostModal(false);
   };
   return (
     <div>
-      <div class='fixed z-10 overflow-y-auto top-10 w-full left-0 ' id='modal'>
+      <div class='fixed z-10 overflow-y-auto top-3 w-full left-0 ' id='modal'>
         <div class='flex items-center justify-center min-height-100vh pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
           <div class='fixed inset-0 transition-opacity'>
-            <div class='absolute inset-0 bg-gray-900 opacity-75' />
+            <div
+              class='absolute inset-0 bg-gray-900 opacity-75'
+              onClick={() => setShowPostModal(false)}
+            />
           </div>
           <span class='hidden sm:inline-block sm:align-middle sm:h-screen'>
             &#8203;
@@ -31,9 +47,9 @@ const PostModal = ({ setShowPostModal, defaultData }) => {
                 value={postData}
                 onChange={(e) => inputHandler(e)}
                 type='text'
-                class='w-full bg-gray-100 p-2 mt-2 mb-3  focus:outline-none'></textarea>
+                class='w-full bg-teal-100 p-2 mt-2 mb-3 min-h-40 h-40 focus:outline-none'></textarea>
             </div>
-            <div class='bg-gray-200 px-4 py-3 text-right'>
+            <div class='bg-teal-200 px-2 py-2 text-right'>
               <button
                 onClick={() => setShowPostModal(false)}
                 type='button'

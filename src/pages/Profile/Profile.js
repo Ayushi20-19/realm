@@ -1,10 +1,11 @@
 import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PostCard from "../../components/Posts/PostCard";
 import { updateUser } from "../../reducers/authSlice";
+import { getAllPosts } from "../../reducers/postSlice";
 import ProfileCard from "./ProfileCard";
 
 const Profile = () => {
@@ -15,7 +16,7 @@ const Profile = () => {
   const { comments, posts } = useSelector((store) => store.posts);
   const [userPosts, setUserPosts] = useState([]);
   const [userData, setUserData] = useState("");
-
+  const dispatch = useDispatch();
   useEffect(() => {
     const getUser = async () => {
       const res = await axios(`/api/users/${url}`);
@@ -27,6 +28,7 @@ const Profile = () => {
     };
     getUser();
     getPosts();
+    dispatch(getAllPosts());
   }, [userHandle.profileID, comments, posts, user]);
 
   useEffect(() => {

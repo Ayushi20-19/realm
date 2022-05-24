@@ -190,6 +190,7 @@ const PostCard = ({ ...posts }) => {
       {showPostModal && (
         <PostModal
           setShowPostModal={setShowPostModal}
+          postId={posts._id}
           defaultData={posts.content}
         />
       )}

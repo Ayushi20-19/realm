@@ -6,7 +6,7 @@ import {
   deletePostService,
   dislikePostService,
   getAllPostService,
-  getUserPostService,
+  editUserPostService,
   likePostService,
   removeFromBookmarkService,
 } from "../services/posts.service";
@@ -52,6 +52,19 @@ export const deletePost = createAsyncThunk(
     }
   }
 );
+
+export const editUserPost = createAsyncThunk(
+  "posts/editUserPost",
+  async ({ postId, postData, token }, thunkAPI) => {
+    try {
+      const response = editUserPostService({ postId, postData, token });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
+
 export const likeDislikePost = createAsyncThunk(
   "posts/likeDislikePost",
   async ({ postId, isLiked, token }, thunkAPI) => {
@@ -132,6 +145,18 @@ const postSlice = createSlice({
       state.posts = payload.posts;
     },
     [deletePost.rejected]: (state, { payload }) => {
+      state.status = "rejected";
+      state.error = payload;
+    },
+    //edit post
+    [editUserPost.pending]: (state) => {
+      state.status = "pending";
+    },
+    [editUserPost.fulfilled]: (state, { payload }) => {
+      state.status = "fulfilled";
+      state.posts = payload.posts;
+    },
+    [editUserPost.rejected]: (state, { payload }) => {
       state.status = "rejected";
       state.error = payload;
     },

@@ -36,7 +36,7 @@ const Feed = () => {
   }, [posts, feedPostsMode]);
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments, posts.likes]);
+  }, [dispatch, bookmarks, comments, posts.likes, posts]);
   useEffect(() => {
     dispatch(getAllUsers());
   }, []);
