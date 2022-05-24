@@ -27,7 +27,7 @@ const Bookmark = () => {
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, comments.comments]);
+  }, [dispatch, comments.comments, bookmark]);
 
   const bookmarkedPosts = posts.filter((post) =>
     bookmark.some((bookmark) => bookmark === post._id)
