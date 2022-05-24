@@ -43,7 +43,7 @@ const PostCard = ({ ...post }) => {
       (name) => name.username === post.username
     );
     setCurrentUser(findUser[0].profilePic);
-  }, []);
+  }, [post]);
 
   return (
     <div key={post._id}>
