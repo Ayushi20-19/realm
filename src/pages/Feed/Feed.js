@@ -35,10 +35,9 @@ const Feed = () => {
     }
   }, [posts, feedPostsMode]);
   useEffect(() => {
-    console.log("object");
     dispatch(getAllPosts());
   }, [bookmarks, comments, postIsEdited]);
-  console.log(postIsEdited);
+
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());
