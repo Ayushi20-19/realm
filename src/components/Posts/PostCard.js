@@ -8,16 +8,18 @@ import {
 } from "../../reducers/postSlice";
 import { useEffect } from "react";
 import PostModal from "./PostModal";
+import { useLocation } from "react-router-dom";
 
 const PostCard = ({ ...post }) => {
   const postId = post._id;
   const dispatch = useDispatch();
+  const urlPath = useLocation();
+
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
   const [showPostModal, setShowPostModal] = useState(false);
   const [commentsList, setCommentsLists] = useState(post.comments || "");
   const [currentUser, setCurrentUser] = useState("");
-
   const { token, user } = useSelector((store) => store.auth);
   const { users } = useSelector((store) => store.users);
   const { bookmarks, comments } = useSelector((store) => store.posts);
@@ -81,11 +83,13 @@ const PostCard = ({ ...post }) => {
 
                     {isOpenDropdown && (
                       <ul className='dropdown absolute text-sm px-1 py-2 rounded-lg  m-0 bg-teal-100 top-8 right-4 w-36 gap-1'>
-                        <li
-                          onClick={() => setShowPostModal(true)}
-                          className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
-                          Edit
-                        </li>
+                        {urlPath.pathname === `/profile/${user.username}` && (
+                          <li
+                            onClick={() => setShowPostModal(true)}
+                            className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
+                            Edit
+                          </li>
+                        )}
                         <li
                           className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
                           onClick={() =>

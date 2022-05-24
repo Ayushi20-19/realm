@@ -8,7 +8,7 @@ import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 
 const Feed = () => {
-  const { posts, status, bookmarks, comments } = useSelector(
+  const { posts, status, bookmarks, comments, postIsEdited } = useSelector(
     (store) => store.posts
   );
 
@@ -35,9 +35,10 @@ const Feed = () => {
     }
   }, [posts, feedPostsMode]);
   useEffect(() => {
+    console.log("object");
     dispatch(getAllPosts());
-  }, [bookmarks, comments]);
-
+  }, [bookmarks, comments, postIsEdited]);
+  console.log(postIsEdited);
   useEffect(() => {
     dispatch(getAllUsers());
     dispatch(getAllPosts());
