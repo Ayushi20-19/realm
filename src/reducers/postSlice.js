@@ -17,6 +17,8 @@ const initialState = {
   posts: [],
   bookmarks: [],
   comments: [],
+  postIsLiked: false,
+  postIsEdited: false,
 };
 
 export const getAllPosts = createAsyncThunk("posts/getAllPosts", async () => {
@@ -67,13 +69,13 @@ export const editUserPost = createAsyncThunk(
 
 export const likeDislikePost = createAsyncThunk(
   "posts/likeDislikePost",
-  async ({ postId, isLiked, token }, thunkAPI) => {
+  async ({ postId, isLiked, token, dispatch }, thunkAPI) => {
     try {
       const response = isLiked
         ? await dislikePostService(postId, token)
         : await likePostService(postId, token);
-
-      return response.data;
+      dispatch(getAllPosts());
+      return { data: response.data, isLiked: !isLiked };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -154,7 +156,7 @@ const postSlice = createSlice({
     },
     [editUserPost.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.posts = payload.posts;
+      state.posts = payload;
     },
     [editUserPost.rejected]: (state, { payload }) => {
       state.status = "rejected";
@@ -167,7 +169,8 @@ const postSlice = createSlice({
     },
     [likeDislikePost.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.posts = payload.posts;
+      state.posts = payload.data.posts;
+      state.postIsLiked = payload.isLiked;
     },
     [likeDislikePost.rejected]: (state, { payload }) => {
       state.status = "rejected";

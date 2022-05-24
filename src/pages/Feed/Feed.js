@@ -8,13 +8,13 @@ import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 
 const Feed = () => {
-  const { posts, status, error, bookmarks, comments } = useSelector(
+  const { posts, status, bookmarks, comments } = useSelector(
     (store) => store.posts
   );
 
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
-  const [feedPosts, setFeedPosts] = useState();
+  const [feedPosts, setFeedPosts] = useState("");
   const [feedPostsMode, setFeedPostsMode] = useState("latest");
 
   const dispatch = useDispatch();
@@ -36,9 +36,11 @@ const Feed = () => {
   }, [posts, feedPostsMode]);
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments, posts.likes, posts]);
+  }, [bookmarks, comments]);
+
   useEffect(() => {
     dispatch(getAllUsers());
+    dispatch(getAllPosts());
   }, []);
 
   return (
@@ -50,7 +52,7 @@ const Feed = () => {
           setFeedPostsMode={setFeedPostsMode}
           feedPostsMode={feedPostsMode}
         />
-        {status !== "idle" || error ? (
+        {feedPosts.length > 0 ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
           <p>{status}</p>

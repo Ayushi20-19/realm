@@ -6,9 +6,8 @@ import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 
 const Explore = () => {
-  const { posts, status, error, bookmarks, comments } = useSelector(
-    (store) => store.posts
-  );
+  const { posts, status, error, bookmarks, comments, postIsLiked } =
+    useSelector((store) => store.posts);
   const [feedPosts, setFeedPosts] = useState();
 
   const dispatch = useDispatch();
@@ -18,7 +17,6 @@ const Explore = () => {
         [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
     } else if (posts) {
-      console.log("object", posts);
       setFeedPosts(
         [...posts].sort(
           (a, b) =>
@@ -28,11 +26,11 @@ const Explore = () => {
         )
       );
     }
-  }, [posts]);
+  }, [postIsLiked, posts]);
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments, posts.likes, posts]);
+  }, [dispatch, bookmarks, comments, postIsLiked]);
 
   useEffect(() => {
     dispatch(getAllUsers());

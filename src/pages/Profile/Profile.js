@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import PostCard from "../../components/Posts/PostCard";
 import { updateUser } from "../../reducers/authSlice";
 import { getAllPosts } from "../../reducers/postSlice";
+import { getAllUsers } from "../../reducers/userSlice";
 import ProfileCard from "./ProfileCard";
 
 const Profile = () => {
@@ -13,10 +14,17 @@ const Profile = () => {
   const url = userHandle.profileID;
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
-  const { comments, posts } = useSelector((store) => store.posts);
+  const { comments, posts, postIsLiked } = useSelector((store) => store.posts);
   const [userPosts, setUserPosts] = useState([]);
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    updateUser();
+    dispatch(getAllPosts());
+    dispatch(getAllUsers());
+  }, []);
+
   useEffect(() => {
     const getUser = async () => {
       const res = await axios(`/api/users/${url}`);
@@ -28,22 +36,19 @@ const Profile = () => {
     };
     getUser();
     getPosts();
-    dispatch(getAllPosts());
-  }, [userHandle.profileID, comments, posts, user]);
+  }, [userHandle.profileID, comments, user, posts, postIsLiked]);
 
   useEffect(() => {
     const user = users.find((user) => user.username === userHandle.profileID);
     setUserData(user);
-  }, [userHandle.profileID, users]);
-
-  useEffect(() => {
-    updateUser();
-  }, []);
+  }, [userHandle.profileID]);
 
   return (
     <div>
-      {userData && (
+      {typeof userData !== "undefined" ? (
         <ProfileCard postsLength={userPosts.length} userData={userData} />
+      ) : (
+        "Loading"
       )}
 
       {userPosts.length > 0 &&
