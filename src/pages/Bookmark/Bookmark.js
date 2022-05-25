@@ -2,6 +2,7 @@ import axios from "axios";
 
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/Posts/PostCard";
 import { getAllPosts } from "../../reducers/postSlice";
 
@@ -34,18 +35,24 @@ const Bookmark = () => {
 
   return (
     <div>
-      {bookmarkedPosts.length > 0 ? (
-        <>
-          <div className='text-center w-full my-3 text-2xl font-semibold'>
-            <p>{bookmarkedPosts.length} posts in bookmark </p>
+      {bookmark ? (
+        bookmarkedPosts.length > 0 ? (
+          <>
+            <div className='text-center w-full my-3 text-2xl font-semibold'>
+              <p>{bookmarkedPosts.length} posts in bookmark </p>
+            </div>
+            {bookmarkedPosts.map((post) => (
+              <PostCard key={post._id} {...post} />
+            ))}
+          </>
+        ) : (
+          <div className='text-center w-full my-3 text-xl'>
+            <h2> No Post is bookmarked yet</h2>
           </div>
-          {bookmarkedPosts.map((post) => (
-            <PostCard key={post._id} {...post} />
-          ))}
-        </>
+        )
       ) : (
-        <div className='text-center w-full my-3 text-xl'>
-          <h2> No Post is bookmarked yet</h2>
+        <div className='w-full min-h-screen flex items-center justify-center'>
+          <Loader />
         </div>
       )}
     </div>

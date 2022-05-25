@@ -6,11 +6,10 @@ import Tab from "./Tab";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
+import Loader from "../../components/Loader/Loader";
 
 const Feed = () => {
-  const { posts, status, bookmarks, comments, postIsEdited } = useSelector(
-    (store) => store.posts
-  );
+  const { posts } = useSelector((store) => store.posts);
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
   const [feedPosts, setFeedPosts] = useState("");
@@ -18,13 +17,25 @@ const Feed = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    if (posts && feedPostsMode === "latest") {
+    console.log(user);
+    const userFilterPost = [...posts].filter(
+      (posts) =>
+        posts.username === user.username ||
+        user.following.some((user) => posts.username === user.username)
+    );
+    console.log(
+      "🚀 ~ file: Feed.js ~ line 21 ~ useEffect ~ userFilterPost",
+      userFilterPost
+    );
+    if (userFilterPost && feedPostsMode === "latest") {
       setFeedPosts(
-        [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+        [...userFilterPost].sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )
       );
-    } else if (posts && feedPostsMode === "trending") {
+    } else if (userFilterPost && feedPostsMode === "trending") {
       setFeedPosts(
-        [...posts].sort(
+        [...userFilterPost].sort(
           (a, b) =>
             parseInt(b.likes.likeCount) +
             b.comments.length -
@@ -33,7 +44,7 @@ const Feed = () => {
       );
       console.log("first");
     }
-  }, [posts, feedPostsMode]);
+  }, [posts, feedPostsMode, user]);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -52,12 +63,21 @@ const Feed = () => {
         {feedPosts.length > 0 ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
-          <p>{status}</p>
+          <div className='w-full  flex items-center justify-center'>
+            <Loader />
+          </div>
         )}
       </div>
       <div className='hidden sm:block'>
-        {users?.map(
-          (data) => user.username !== data.username && <FollowCard {...data} />
+        {users ? (
+          users?.map(
+            (data) =>
+              user.username !== data.username && <FollowCard {...data} />
+          )
+        ) : (
+          <div className='w-full  flex items-center justify-center'>
+            <Loader />
+          </div>
         )}
       </div>
     </div>

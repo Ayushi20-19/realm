@@ -3,6 +3,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import Loader from "../../components/Loader/Loader";
 import PostCard from "../../components/Posts/PostCard";
 import { updateUser } from "../../reducers/authSlice";
 import { getAllPosts } from "../../reducers/postSlice";
@@ -52,12 +53,14 @@ const Profile = () => {
       {userData ? (
         <ProfileCard postsLength={userPosts.length} userData={userData} />
       ) : (
-        "Loading"
+        <div className='w-full min-h-screen flex items-center justify-center'>
+          <Loader />
+        </div>
       )}
 
       {userPosts.length > 0
         ? userPosts?.map((posts) => <PostCard {...posts} />)
-        : "loading"}
+        : ""}
     </div>
   );
 };
