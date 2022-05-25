@@ -7,6 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 import Loader from "../../components/Loader/Loader";
+import { updateUser } from "../../reducers/authSlice";
 
 const Feed = () => {
   const { posts } = useSelector((store) => store.posts);
@@ -14,37 +15,52 @@ const Feed = () => {
   const { user } = useSelector((store) => store.auth);
   const [feedPosts, setFeedPosts] = useState("");
   const [feedPostsMode, setFeedPostsMode] = useState("latest");
+  const [unfollowedUsers, setUnfollowedUsers] = useState([]);
 
   const dispatch = useDispatch();
+  const currUser = users.filter((item) => item.username === user.username);
+  const currentuser = Object.assign({}, ...currUser);
+
   useEffect(() => {
-    console.log(user);
-    const userFilterPost = [...posts].filter(
-      (posts) =>
-        posts.username === user.username ||
-        user.following.some((user) => posts.username === user.username)
+    const filterCurrentUser = users.filter(
+      (item) => item.username !== user.username
     );
-    console.log(
-      "🚀 ~ file: Feed.js ~ line 21 ~ useEffect ~ userFilterPost",
-      userFilterPost
+    const filterUsers = filterCurrentUser.filter((userToFilter) =>
+      currentuser.following.every(
+        (item) => item.username !== userToFilter.username
+      )
     );
-    if (userFilterPost && feedPostsMode === "latest") {
-      setFeedPosts(
-        [...userFilterPost].sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-        )
+
+    setUnfollowedUsers(filterUsers);
+  }, [users]);
+
+  useEffect(() => {
+    if (posts) {
+      const userFilterPost = [...posts].filter(
+        (posts) =>
+          posts.username === currentuser.username ||
+          currentuser.following.some((user) => posts.username === user.username)
       );
-    } else if (userFilterPost && feedPostsMode === "trending") {
-      setFeedPosts(
-        [...userFilterPost].sort(
-          (a, b) =>
-            parseInt(b.likes.likeCount) +
-            b.comments.length -
-            parseInt(a.likes.likeCount + a.comments.length)
-        )
-      );
-      console.log("first");
+
+      if (userFilterPost && feedPostsMode === "latest") {
+        setFeedPosts(
+          [...userFilterPost].sort(
+            (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          )
+        );
+      } else if (userFilterPost && feedPostsMode === "trending") {
+        setFeedPosts(
+          [...userFilterPost].sort(
+            (a, b) =>
+              parseInt(b.likes.likeCount) +
+              b.comments.length -
+              parseInt(a.likes.likeCount + a.comments.length)
+          )
+        );
+        console.log("first");
+      }
     }
-  }, [posts, feedPostsMode, user]);
+  }, [posts, feedPostsMode, users]);
 
   useEffect(() => {
     dispatch(getAllUsers());
@@ -69,8 +85,8 @@ const Feed = () => {
         )}
       </div>
       <div className='hidden sm:block'>
-        {users ? (
-          users?.map(
+        {unfollowedUsers ? (
+          unfollowedUsers?.map(
             (data) =>
               user.username !== data.username && <FollowCard {...data} />
           )

@@ -27,17 +27,6 @@ export const userSignup = createAsyncThunk("auth/userSignup", async () => {
   } catch (error) {}
 });
 
-export const updateUser = createAsyncThunk(
-  "auth/updateUser",
-  async (user, thunkAPI) => {
-    try {
-      return user;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error);
-    }
-  }
-);
-
 export const editUserProfile = createAsyncThunk(
   "auth/editProfile",
   async ({ userData, token }, thunkAPI) => {
@@ -61,6 +50,10 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    updateUser: (state, { payload }) => {
+      state.user = payload;
+      localStorage.setItem("user", JSON.stringify(state.user));
+    },
     logout: () => {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
@@ -99,15 +92,7 @@ const authSlice = createSlice({
       state.authStatus = "Error";
       state.error = payload;
     },
-    [updateUser.fulfilled]: (state, { payload }) => {
-      state.authStatus = "fulfilled";
-      state.user = payload;
-      localStorage.setItem("user", JSON.stringify(state.user));
-    },
-    [updateUser.rejected]: (state, { payload }) => {
-      state.authStatus = "Error";
-      state.error = payload;
-    },
+
     [editUserProfile.pending]: (state, action) => {
       state.btnStatus = "loading";
     },
@@ -122,6 +107,6 @@ const authSlice = createSlice({
     },
   },
 });
-export const { logout } = authSlice.actions;
+export const { logout, updateUser } = authSlice.actions;
 
 export default authSlice.reducer;
