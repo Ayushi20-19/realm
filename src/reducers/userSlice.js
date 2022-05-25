@@ -12,7 +12,7 @@ const initialState = {
 };
 
 export const getAllUsers = createAsyncThunk(
-  "users/getAllUSers",
+  "users/getAllUsers",
   async (_, thunkAPI) => {
     try {
       const response = await getAllUserService();

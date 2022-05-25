@@ -1,43 +1,63 @@
+import axios from "axios";
 import React from "react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import PostCard from "../../components/Posts/PostCard";
 import { updateUser } from "../../reducers/authSlice";
-import { getUserPosts } from "../../reducers/postSlice";
+import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 import ProfileCard from "./ProfileCard";
 
 const Profile = () => {
   const userHandle = useParams();
+  const url = userHandle.profileID;
   const { users } = useSelector((store) => store.users);
-  const { userPosts } = useSelector((store) => store.posts);
-  const [userData, setUserData] = useState("");
-  // const [profilePost, setProfilePost] = useState(userPosts);
-  // const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.auth);
+  const { comments, posts, postIsLiked } = useSelector((store) => store.posts);
+  const [userPosts, setUserPosts] = useState([]);
+  const [userData, setUserData] = useState();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const user = users.find((user) => user.username === userHandle.profileID);
-    setUserData(user);
-    // dispatch(getUserPosts(userData?.username));
-    // setProfilePost(
-    //   [userPosts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    // );
-    // console.log(profilePost);
-  }, [userHandle.profileID, users]);
-
-  useEffect(() => {
-    updateUser();
+    // updateUser();
+    // dispatch(getAllPosts());
+    dispatch(getAllUsers());
   }, []);
+  // useEffect(() => {
+  //   // updateUser();
+  //   dispatch(getAllPosts());
+  //   // dispatch(getAllUsers());
+  //   console.log("object");
+  // }, [postIsLiked, comments]);
+
+  useEffect(() => {
+    const getUser = async () => {
+      const res = await axios(`/api/users/${url}`);
+      setUserData(res.data.user);
+    };
+    getUser();
+  }, [url, user]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      const res = await axios(`/api/posts/user/${url}`);
+      setUserPosts(res.data.posts);
+    };
+    getPosts();
+  }, [url, posts]);
 
   return (
     <div>
-      <ProfileCard {...userData} />
-      {/* {console.log(profilePost.lenght)}
+      {userData ? (
+        <ProfileCard postsLength={userPosts.length} userData={userData} />
+      ) : (
+        "Loading"
+      )}
 
-      {profilePost.lenght === undefined
-        ? null
-        : profilePost?.map((posts) => <PostCard {...posts} />)} */}
+      {userPosts.length > 0
+        ? userPosts?.map((posts) => <PostCard {...posts} />)
+        : "loading"}
     </div>
   );
 };

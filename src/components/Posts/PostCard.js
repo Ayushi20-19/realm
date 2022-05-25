@@ -7,36 +7,51 @@ import {
   addComment,
 } from "../../reducers/postSlice";
 import { useEffect } from "react";
+import PostModal from "./PostModal";
+import { useLocation } from "react-router-dom";
 
-const PostCard = ({ ...posts }) => {
-  const postId = posts._id;
+const PostCard = ({ ...post }) => {
+  const postId = post._id;
+  const dispatch = useDispatch();
+  const urlPath = useLocation();
+
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
-  const [commentsList, setCommentsLists] = useState(posts.comments || "");
-  const dispatch = useDispatch();
-  const { token, user } = useSelector((store) => store.auth);
-  const { bookmarks, comments, userPosts } = useSelector(
-    (store) => store.posts
-  );
+  const [showPostModal, setShowPostModal] = useState(false);
+  const [commentsList, setCommentsLists] = useState(post.comments || []);
+  const [currentUser, setCurrentUser] = useState("");
 
-  const isLiked = posts.likes.likedBy?.some(
+  const { token, user } = useSelector((store) => store.auth);
+  const { users } = useSelector((store) => store.users);
+
+  const { bookmarks, comments } = useSelector((store) => store.posts);
+
+  const isLiked = post.likes.likedBy?.some(
     (like) => like.username === user.username
   );
 
   const isBookmarked = bookmarks.bookmarks?.some((id) => id === postId);
 
   useEffect(() => {
-    if (posts.comments) {
+    if (post.comments) {
       setCommentsLists(
-        [...posts.comments].sort(
+        [...post.comments].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         )
       );
     }
-  }, [posts.comments, comments.comments]);
+  }, [post.comments, comments.comments]);
+
+  useEffect(() => {
+    const findUser = [...users].filter(
+      (name) => name.username === post.username
+    );
+
+    setCurrentUser(findUser[0].profilePic);
+  }, [post]);
 
   return (
-    <div key={posts._id}>
+    <div key={post._id}>
       <div className='container main-post-container  mx-auto w-full'>
         <div>
           <div className='main-post-container p-3 px-6 flex justify-center items-center'>
@@ -44,20 +59,17 @@ const PostCard = ({ ...posts }) => {
               <div className='flex items-center justify-between p-3'>
                 <div className='flex items-center space-x-2'>
                   <img
-                    src='https://friendkit.cssninja.io/assets/img/avatars/dan.jpg'
+                    src={currentUser}
                     alt=''
                     className='object-cover object-center w-8 h-8 rounded-full shadow-sm bg-coolGray-500 border-coolGray-700'
                   />
                   <div className='-space-y-1'>
                     <h2 className='text-sm font-semibold leading-none'>
-                      {posts.username}
+                      {post.username}
                     </h2>
-                    <span className='inline-block text-xs leading-none text-coolGray-400'>
-                      New York
-                    </span>
                   </div>
                 </div>
-                {user.username === posts.username && (
+                {user.username === post.username && (
                   <div
                     className='rounded-full px-3 py-0.5 cursor-pointer relative duration-200'
                     onClick={() => setOpenDropdown(!isOpenDropdown)}>
@@ -74,9 +86,13 @@ const PostCard = ({ ...posts }) => {
 
                     {isOpenDropdown && (
                       <ul className='dropdown absolute text-sm px-1 py-2 rounded-lg  m-0 bg-teal-100 top-8 right-4 w-36 gap-1'>
-                        <li className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
+                        {/* {urlPath.pathname === `/profile/${user.username}` && ( */}
+                        <li
+                          onClick={() => setShowPostModal(true)}
+                          className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
                           Edit
                         </li>
+                        {/* )} */}
                         <li
                           className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
                           onClick={() =>
@@ -90,13 +106,7 @@ const PostCard = ({ ...posts }) => {
                 )}
               </div>
               <div className='p-3  '>
-                <p className='text-sm mb-1'>{posts.content}</p>
-                {/*commented purpously 
-                <img
-                  src='https://friendkit.cssninja.io/assets/img/demo/unsplash/2.jpg'
-                  alt=''
-                  className='object-cover object-center w-full h-72 bg-coolGray-500 my-1'
-                /> */}
+                <p className='text-sm mb-1'>{post.content}</p>
               </div>
 
               <div className='p-3'>
@@ -104,7 +114,9 @@ const PostCard = ({ ...posts }) => {
                   <div className='flex items-center space-x-3'>
                     <button
                       onClick={() =>
-                        dispatch(likeDislikePost({ postId, isLiked, token }))
+                        dispatch(
+                          likeDislikePost({ postId, isLiked, token, dispatch })
+                        )
                       }
                       type='button'
                       title='Like post'
@@ -115,14 +127,14 @@ const PostCard = ({ ...posts }) => {
                         <i class='fal fa-heart  mr-1 hover:text-red-400 text-xl'></i>
                       )}
                     </button>
-                    {posts.likes.likeCount}
+                    {post.likes.likeCount}
                     <button
                       type='button'
                       title='Add a comment'
                       className='flex items-center justify-center'>
                       <i class='fal fa-comment  mr-1 hover:text-teal-400 text-xl'></i>
                     </button>
-                    {posts.comments.length}
+                    {post.comments.length}
                     <button
                       type='button'
                       title='Share post'
@@ -183,6 +195,13 @@ const PostCard = ({ ...posts }) => {
           </div>
         </div>
       </div>
+      {showPostModal && (
+        <PostModal
+          setShowPostModal={setShowPostModal}
+          postId={post._id}
+          defaultData={post.content}
+        />
+      )}
     </div>
   );
 };

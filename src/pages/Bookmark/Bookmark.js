@@ -6,28 +6,27 @@ import PostCard from "../../components/Posts/PostCard";
 import { getAllPosts } from "../../reducers/postSlice";
 
 const Bookmark = () => {
-  const { posts, bookmarks, comments } = useSelector((store) => store.posts);
-
+  const { posts, status, bookmarks, comments } = useSelector(
+    (store) => store.posts
+  );
   const { user, token } = useSelector((state) => state.auth);
   const [bookmark, setBookmarks] = useState([]);
   const dispatch = useDispatch();
+
   useEffect(() => {
     try {
       const getBookmarks = async () => {
         const response = await axios.get("/api/users/bookmark", {
           headers: { authorization: token },
         });
+
         setBookmarks(response.data.bookmarks);
       };
       getBookmarks();
     } catch (error) {
       console.log(error);
     }
-  }, [posts, user, bookmarks, comments.comments]);
-
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, [dispatch, comments.comments]);
+  }, [bookmarks]);
 
   const bookmarkedPosts = posts.filter((post) =>
     bookmark.some((bookmark) => bookmark === post._id)

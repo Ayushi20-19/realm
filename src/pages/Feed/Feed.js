@@ -8,26 +8,36 @@ import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
 
 const Feed = () => {
-  const { posts, status, error, bookmarks, comments } = useSelector(
+  const { posts, status, bookmarks, comments, postIsEdited } = useSelector(
     (store) => store.posts
   );
-
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
-  const [feedPosts, setFeedPosts] = useState();
+  const [feedPosts, setFeedPosts] = useState("");
+  const [feedPostsMode, setFeedPostsMode] = useState("latest");
+
   const dispatch = useDispatch();
   useEffect(() => {
-    if (posts) {
+    if (posts && feedPostsMode === "latest") {
       setFeedPosts(
         [...posts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
       );
+    } else if (posts && feedPostsMode === "trending") {
+      setFeedPosts(
+        [...posts].sort(
+          (a, b) =>
+            parseInt(b.likes.likeCount) +
+            b.comments.length -
+            parseInt(a.likes.likeCount + a.comments.length)
+        )
+      );
+      console.log("first");
     }
-  }, [posts]);
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments]);
+  }, [posts, feedPostsMode]);
+
   useEffect(() => {
     dispatch(getAllUsers());
+    dispatch(getAllPosts());
   }, []);
 
   return (
@@ -35,8 +45,11 @@ const Feed = () => {
       <div className='hidden wp-20 sm:block'></div>
       <div className='sm:42'>
         <CreatePost />
-        <Tab />
-        {status !== "idle" || error ? (
+        <Tab
+          setFeedPostsMode={setFeedPostsMode}
+          feedPostsMode={feedPostsMode}
+        />
+        {feedPosts.length > 0 ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
           <p>{status}</p>
