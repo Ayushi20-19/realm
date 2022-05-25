@@ -18,10 +18,12 @@ const PostCard = ({ ...post }) => {
   const [isOpenDropdown, setOpenDropdown] = useState(false);
   const [commentData, setCommentData] = useState("");
   const [showPostModal, setShowPostModal] = useState(false);
-  const [commentsList, setCommentsLists] = useState(post.comments || "");
+  const [commentsList, setCommentsLists] = useState(post.comments || []);
   const [currentUser, setCurrentUser] = useState("");
+
   const { token, user } = useSelector((store) => store.auth);
   const { users } = useSelector((store) => store.users);
+
   const { bookmarks, comments } = useSelector((store) => store.posts);
 
   const isLiked = post.likes.likedBy?.some(
@@ -44,6 +46,7 @@ const PostCard = ({ ...post }) => {
     const findUser = [...users].filter(
       (name) => name.username === post.username
     );
+
     setCurrentUser(findUser[0].profilePic);
   }, [post]);
 
@@ -83,13 +86,13 @@ const PostCard = ({ ...post }) => {
 
                     {isOpenDropdown && (
                       <ul className='dropdown absolute text-sm px-1 py-2 rounded-lg  m-0 bg-teal-100 top-8 right-4 w-36 gap-1'>
-                        {urlPath.pathname === `/profile/${user.username}` && (
-                          <li
-                            onClick={() => setShowPostModal(true)}
-                            className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
-                            Edit
-                          </li>
-                        )}
+                        {/* {urlPath.pathname === `/profile/${user.username}` && ( */}
+                        <li
+                          onClick={() => setShowPostModal(true)}
+                          className='hover:bg-white flex items-center  px-3 py-1 rounded-lg'>
+                          Edit
+                        </li>
+                        {/* )} */}
                         <li
                           className='hover:bg-white flex items-center px-3 py-1 rounded-lg'
                           onClick={() =>

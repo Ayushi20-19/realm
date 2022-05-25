@@ -11,7 +11,6 @@ const Feed = () => {
   const { posts, status, bookmarks, comments, postIsEdited } = useSelector(
     (store) => store.posts
   );
-
   const { users } = useSelector((store) => store.users);
   const { user } = useSelector((store) => store.auth);
   const [feedPosts, setFeedPosts] = useState("");
@@ -32,11 +31,9 @@ const Feed = () => {
             parseInt(a.likes.likeCount + a.comments.length)
         )
       );
+      console.log("first");
     }
   }, [posts, feedPostsMode]);
-  useEffect(() => {
-    dispatch(getAllPosts());
-  }, [bookmarks, comments, postIsEdited]);
 
   useEffect(() => {
     dispatch(getAllUsers());

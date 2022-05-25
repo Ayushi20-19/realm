@@ -58,7 +58,8 @@ export const editUserPost = createAsyncThunk(
   "posts/editUserPost",
   async ({ postId, postData, token }, thunkAPI) => {
     try {
-      const response = editUserPostService({ postId, postData, token });
+      const response = await editUserPostService({ postId, postData, token });
+
       return { data: response.data, postIsEdited: true };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
@@ -101,7 +102,7 @@ export const addComment = createAsyncThunk(
     try {
       const response = await addCommentService(postId, commentData, token);
 
-      return response.data;
+      return { data: response.data, postId };
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }
@@ -155,7 +156,7 @@ const postSlice = createSlice({
     },
     [editUserPost.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.posts = payload.data;
+      state.posts = payload.data.posts;
       state.postIsEdited = payload.postIsEdited;
     },
     [editUserPost.rejected]: (state, { payload }) => {
@@ -194,7 +195,11 @@ const postSlice = createSlice({
     },
     [addComment.fulfilled]: (state, { payload }) => {
       state.status = "fulfilled";
-      state.comments = payload;
+      state.posts = state.posts.map((post) =>
+        post._id === payload.postId
+          ? { ...post, comments: payload.data.comments }
+          : post
+      );
     },
     [addComment.rejected]: (state, { payload }) => {
       state.status = "rejected";

@@ -15,7 +15,8 @@ const Explore = () => {
     postIsLiked,
     postIsEdited,
   } = useSelector((store) => store.posts);
-  const [feedPosts, setFeedPosts] = useState();
+
+  const [feedPosts, setFeedPosts] = useState([]);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -33,20 +34,17 @@ const Explore = () => {
         )
       );
     }
-  }, [postIsLiked, posts]);
+  }, [postIsLiked, posts, status]);
 
   useEffect(() => {
     dispatch(getAllPosts());
-  }, [dispatch, bookmarks, comments, postIsLiked, postIsEdited]);
-
-  useEffect(() => {
-    dispatch(getAllUsers());
+    // dispatch(getAllUsers());
   }, []);
 
   return (
     <div className='flex m-auto w-full justify-center '>
       <div className='sm:42'>
-        {status !== "idle" || error ? (
+        {feedPosts.length > 0 ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
           <p>{status}</p>

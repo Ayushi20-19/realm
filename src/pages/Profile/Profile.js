@@ -20,39 +20,44 @@ const Profile = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    updateUser();
-    dispatch(getAllPosts());
+    // updateUser();
+    // dispatch(getAllPosts());
     dispatch(getAllUsers());
   }, []);
+  // useEffect(() => {
+  //   // updateUser();
+  //   dispatch(getAllPosts());
+  //   // dispatch(getAllUsers());
+  //   console.log("object");
+  // }, [postIsLiked, comments]);
 
   useEffect(() => {
     const getUser = async () => {
       const res = await axios(`/api/users/${url}`);
       setUserData(res.data.user);
     };
+    getUser();
+  }, [url, user]);
+
+  useEffect(() => {
     const getPosts = async () => {
       const res = await axios(`/api/posts/user/${url}`);
       setUserPosts(res.data.posts);
     };
-    getUser();
     getPosts();
-  }, [userHandle.profileID, comments, user, posts, postIsLiked]);
-
-  useEffect(() => {
-    const user = users.find((user) => user.username === userHandle.profileID);
-    setUserData(user);
-  }, [userHandle.profileID]);
+  }, [url, posts]);
 
   return (
     <div>
-      {typeof userData !== "undefined" ? (
+      {userData ? (
         <ProfileCard postsLength={userPosts.length} userData={userData} />
       ) : (
         "Loading"
       )}
 
-      {userPosts.length > 0 &&
-        userPosts?.map((posts) => <PostCard {...posts} />)}
+      {userPosts.length > 0
+        ? userPosts?.map((posts) => <PostCard {...posts} />)
+        : "loading"}
     </div>
   );
 };
