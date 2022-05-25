@@ -38,7 +38,7 @@ const Explore = () => {
 
   useEffect(() => {
     dispatch(getAllPosts());
-    // dispatch(getAllUsers());
+    dispatch(getAllUsers());
   }, []);
 
   return (
