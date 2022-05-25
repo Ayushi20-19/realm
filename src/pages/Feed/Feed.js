@@ -85,6 +85,9 @@ const Feed = () => {
         )}
       </div>
       <div className='hidden sm:block'>
+        <div className='w-full my-5 font-semibold text-xl flex items-center justify-center'>
+          Who to follow
+        </div>
         {unfollowedUsers ? (
           unfollowedUsers?.map(
             (data) =>
