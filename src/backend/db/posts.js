@@ -18,7 +18,7 @@ export const posts = [
       likedBy: [],
       dislikedBy: [],
     },
-    username: "adarshbalika",
+    username: "adarshbalaka",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [
@@ -90,7 +90,7 @@ export const posts = [
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos .",
     likes: {
-      likeCount: 5,
+      likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
@@ -128,11 +128,50 @@ export const posts = [
     content:
       "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos .",
     likes: {
-      likeCount: 0,
+      likeCount: 10,
       likedBy: [],
       dislikedBy: [],
     },
     username: "adarshbalika",
+    createdAt: formatDate(),
+    updatedAt: formatDate(),
+    comments: [
+      {
+        _id: uuid(),
+        username: "shubhamsoni",
+        text: "Interesting",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+        createdAt: formatDate(),
+        updatedAt: formatDate(),
+      },
+      {
+        _id: uuid(),
+        username: "sohamshah",
+        text: "Wow!",
+        votes: {
+          upvotedBy: [],
+          downvotedBy: [],
+        },
+        createdAt: formatDate(),
+        updatedAt: formatDate(),
+      },
+    ],
+  },
+  {
+    _id: uuid(),
+
+    bookmarks: [],
+    content:
+      "At vero eos et accusamus et iusto odio dignissimos ducimus qui nt, Nam libero tempore, cum soluta nobis estplaceat facere possimus, omnis voluptas assumenda est, omnis doibus aut a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+    likes: {
+      likeCount: 0,
+      likedBy: [],
+      dislikedBy: [],
+    },
+    username: "ervinhowel",
     createdAt: formatDate(),
     updatedAt: formatDate(),
     comments: [

@@ -4,6 +4,7 @@ import PostCard from "../../components/Posts/PostCard";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllPosts } from "../../reducers/postSlice";
 import { getAllUsers } from "../../reducers/userSlice";
+import Loader from "../../components/Loader/Loader";
 
 const Explore = () => {
   const {
@@ -47,7 +48,9 @@ const Explore = () => {
         {feedPosts.length > 0 ? (
           feedPosts?.map((post) => <PostCard {...post} />)
         ) : (
-          <p>{status}</p>
+          <div className='w-full min-h-screen flex items-center justify-center'>
+            <Loader />
+          </div>
         )}
       </div>
     </div>
