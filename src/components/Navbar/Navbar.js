@@ -69,7 +69,7 @@ export default function Navbar() {
                       <span className='sr-only'>Open user menu</span>
                       <img
                         className='h-8 w-8 rounded-full'
-                        src='https://randomuser.me/api/portraits/women/21.jpg'
+                        src={user.profilePic}
                         alt=''
                       />
                     </Menu.Button>

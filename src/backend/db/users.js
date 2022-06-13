@@ -14,7 +14,8 @@ export const users = [
     link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHR3aXR0ZXIlMjBiZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
-    profilePic: "https://randomuser.me/api/portraits/women/21.jpg",
+    profilePic:
+      "https://images.unsplash.com/photo-1484399172022-72a90b12e3c1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NTR8fGdpcmwlMjBkcHxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400&q=60",
     username: "aaliyahsedmon",
     password: "aaliyahsedmon123",
     following: [],
