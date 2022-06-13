@@ -8,15 +8,15 @@ import { formatDate } from "../utils/authUtils";
 export const users = [
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balika",
+    firstName: "Aaliyah",
+    lastName: "Sedmon",
     bio: "A web developer",
     link: "https://adarshbalika.netlify.app/",
     profileBanner:
       "https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHR3aXR0ZXIlMjBiZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic: "https://randomuser.me/api/portraits/women/21.jpg",
-    username: "adarshbalika",
-    password: "adarshBalika123",
+    username: "aaliyahsedmon",
+    password: "aaliyahsedmon123",
     following: [],
     followers: [],
     bookmarks: [],
@@ -25,16 +25,16 @@ export const users = [
   },
   {
     _id: uuid(),
-    firstName: "Adarsh",
-    lastName: "Balaka",
+    firstName: "Abdiel",
+    lastName: "Kent",
     bio: "Like Coding as its fun",
     link: "https://adarshbalika.netlify.app/",
     profileBanner:
       "https://images.unsplash.com/photo-1464983953574-0892a716854b?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fHR3aXR0ZXIlMjBiZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic:
       "https://images.unsplash.com/photo-1650110002977-3ee8cc5eac91?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGUlMjBwaWNzJTIwbWVuc3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
-    username: "adarshbalaka",
-    password: "adarshBalaka123",
+    username: "abdielkent",
+    password: "abdielkent123",
     following: [],
     followers: [],
     bookmarks: [],
