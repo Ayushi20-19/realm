@@ -135,12 +135,12 @@ const PostCard = ({ ...post }) => {
                       <i class='fal fa-comment  mr-1 hover:text-teal-400 text-xl'></i>
                     </button>
                     {post.comments.length}
-                    <button
+                    {/* <button
                       type='button'
                       title='Share post'
                       className='flex items-center justify-center'>
                       <i class='fal fa-light fa-paper-plane hover:text-teal-400  text-xl'></i>
-                    </button>
+                    </button> */}
                   </div>
                   <button
                     onClick={() =>

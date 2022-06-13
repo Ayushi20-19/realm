@@ -16,8 +16,8 @@ const CreatePost = () => {
             <div className='flex items-center justify-between p-3'>
               <div className='flex items-center space-x-2'>
                 <img
-                  src='https://randomuser.me/api/portraits/women/21.jpg'
-                  alt=''
+                  src={user.profilePic}
+                  alt='profilepic '
                   className='object-cover object-center w-8 h-8 rounded-full shadow-sm bg-coolGray-500 border-coolGray-700'
                 />
                 <div className='-space-y-1'>
