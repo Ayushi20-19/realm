@@ -11,7 +11,7 @@ export const users = [
     firstName: "Aaliyah",
     lastName: "Sedmon",
     bio: "A web developer",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1494500764479-0c8f2919a3d8?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTR8fHR3aXR0ZXIlMjBiZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic: "https://randomuser.me/api/portraits/women/21.jpg",
@@ -28,7 +28,7 @@ export const users = [
     firstName: "Abdiel",
     lastName: "Kent",
     bio: "Like Coding as its fun",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1464983953574-0892a716854b?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDB8fHR3aXR0ZXIlMjBiZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic:
@@ -46,7 +46,7 @@ export const users = [
     firstName: "Jhon",
     lastName: "Graham",
     bio: "Hey thanks for checking my profile",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1470138831303-3e77dd49163e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZG9nJTIwbGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400",
     profilePic:
@@ -64,7 +64,7 @@ export const users = [
     firstName: "Clementine",
     lastName: "Bauch",
     bio: "Everthing need practice",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1520869422133-f2ac1279d8b4?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTV8fGRvZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic:
@@ -82,7 +82,7 @@ export const users = [
     firstName: "Ervin",
     lastName: "Howel",
     bio: "Like follow, Comment",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1517879288527-682ff596b022?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fGRvZyUyMGxhbmRzY2FwZXxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=400",
     profilePic:
@@ -100,7 +100,7 @@ export const users = [
     firstName: "Kristian",
     lastName: "Howel",
     bio: "Check out my work here",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1500964757637-c85e8a162699?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dHdpdHRlciUyMGJnJTIwbGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400",
     profilePic:
@@ -118,7 +118,7 @@ export const users = [
     firstName: "Jhon",
     lastName: "Howel",
     bio: "Singer, coder, traveling",
-    link: "https://adarshbalika.netlify.app/",
+    link: "https://peerlist.io/ayushiverma",
     profileBanner:
       "https://images.unsplash.com/photo-1472214103451-9374bd1c798e?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=60&raw_url=true&ixid=MnwxMjA3fDB8MHxzZWFyY2h8N3x8dHdpdHRlciUyMGJnJTIwbGFuZHNjYXBlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=400",
     profilePic:
