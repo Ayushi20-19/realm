@@ -139,7 +139,7 @@ export const posts = [
       {
         _id: uuid(),
         username: "jhongraham",
-        text: "Interesting Greate UI",
+        text: "Interesting Great UI",
         votes: {
           upvotedBy: [],
           downvotedBy: [],
